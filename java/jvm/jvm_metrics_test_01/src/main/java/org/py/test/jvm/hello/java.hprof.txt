@@ -1,0 +1,246 @@
+JAVA PROFILE 1.0.1, created Mon Nov 16 11:38:12 2020
+
+Copyright (c) 2003, 2005, Oracle and/or its affiliates. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in the
+    documentation and/or other materials provided with the distribution.
+
+  - Neither the name of Oracle nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+Header for -agentlib:hprof (or -Xrunhprof) ASCII Output (JDK 5.0 JVMTI based)
+
+WARNING!  This file format is under development, and is subject to
+change without notice.
+
+This file contains the following types of records:
+
+THREAD START
+THREAD END      mark the lifetime of Java threads
+
+TRACE           represents a Java stack trace.  Each trace consists
+                of a series of stack frames.  Other records refer to
+                TRACEs to identify (1) where object allocations have
+                taken place, (2) the frames in which GC roots were
+                found, and (3) frequently executed methods.
+
+HEAP DUMP       is a complete snapshot of all live objects in the Java
+                heap.  Following distinctions are made:
+
+                ROOT    root set as determined by GC
+                CLS     classes 
+                OBJ     instances
+                ARR     arrays
+
+SITES           is a sorted list of allocation sites.  This identifies
+                the most heavily allocated object types, and the TRACE
+                at which those allocations occurred.
+
+CPU SAMPLES     is a statistical profile of program execution.  The VM
+                periodically samples all running threads, and assigns
+                a quantum to active TRACEs in those threads.  Entries
+                in this record are TRACEs ranked by the percentage of
+                total quanta they consumed; top-ranked TRACEs are
+                typically hot spots in the program.
+
+CPU TIME        is a profile of program execution obtained by measuring
+                the time spent in individual methods (excluding the time
+                spent in callees), as well as by counting the number of
+                times each method is called. Entries in this record are
+                TRACEs ranked by the percentage of total CPU time. The
+                "count" field indicates the number of times each TRACE 
+                is invoked.
+
+MONITOR TIME    is a profile of monitor contention obtained by measuring
+                the time spent by a thread waiting to enter a monitor.
+                Entries in this record are TRACEs ranked by the percentage
+                of total monitor contention time and a brief description
+                of the monitor.  The "count" field indicates the number of 
+                times the monitor was contended at that TRACE.
+
+MONITOR DUMP    is a complete snapshot of all the monitors and threads in 
+                the System.
+
+HEAP DUMP, SITES, CPU SAMPLES|TIME and MONITOR DUMP|TIME records are generated 
+at program exit.  They can also be obtained during program execution by typing 
+Ctrl-\ (on Solaris) or by typing Ctrl-Break (on Win32).
+
+--------
+
+THREAD START (obj=50000194, id = 200001, name="main", group="main")
+THREAD END (id = 200001)
+TRACE 300080:
+	java.util.zip.ZipFile.read(ZipFile.java:Unknown line)
+	java.util.zip.ZipFile.access$1400(ZipFile.java:60)
+	java.util.zip.ZipFile$ZipFileInputStream.read(ZipFile.java:734)
+	sun.misc.Resource.getBytes(Resource.java:124)
+TRACE 300069:
+	java.lang.ClassLoader.defineClass1(ClassLoader.java:Unknown line)
+	java.lang.ClassLoader.defineClass(ClassLoader.java:756)
+	java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142)
+	java.net.URLClassLoader.defineClass(URLClassLoader.java:468)
+TRACE 300218:
+	com.sun.tools.javac.file.ZipFileIndex.getRelativeDirectory(ZipFileIndex.java:1055)
+	com.sun.tools.javac.file.ZipFileIndex.access$700(ZipFileIndex.java:79)
+	com.sun.tools.javac.file.ZipFileIndex$ZipDirectory.readEntry(ZipFileIndex.java:641)
+	com.sun.tools.javac.file.ZipFileIndex$ZipDirectory.buildIndex(ZipFileIndex.java:576)
+TRACE 300142:
+	java.util.regex.Pattern$CharPropertyNames.defClone(Pattern.java:5607)
+	java.util.regex.Pattern$CharPropertyNames.<clinit>(Pattern.java:5715)
+	java.util.regex.Pattern.charPropertyNodeFor(Pattern.java:2793)
+	java.util.regex.Pattern.family(Pattern.java:2750)
+TRACE 300186:
+	com.sun.tools.javac.tree.TreeMaker.MethodDef(TreeMaker.java:187)
+	com.sun.tools.javac.parser.JavacParser.methodDeclaratorRest(JavacParser.java:3606)
+	com.sun.tools.javac.parser.JavacParser.classOrInterfaceBodyDeclaration(JavacParser.java:3532)
+	com.sun.tools.javac.parser.JavacParser.classOrInterfaceBody(JavacParser.java:3436)
+TRACE 300171:
+	com.sun.tools.javac.parser.Scanner.<init>(Scanner.java:74)
+	com.sun.tools.javac.parser.ScannerFactory.newScanner(ScannerFactory.java:77)
+	com.sun.tools.javac.parser.ParserFactory.newParser(ParserFactory.java:84)
+	com.sun.tools.javac.main.JavaCompiler.parse(JavaCompiler.java:627)
+TRACE 300116:
+	java.util.zip.ZipFile.getEntry(ZipFile.java:Unknown line)
+	java.util.zip.ZipFile.getEntry(ZipFile.java:316)
+	java.util.jar.JarFile.getEntry(JarFile.java:241)
+	java.util.jar.JarFile.getJarEntry(JarFile.java:224)
+TRACE 300223:
+	com.sun.tools.javac.file.ZipFileIndex$ZipDirectory.readEntry(ZipFileIndex.java:612)
+	com.sun.tools.javac.file.ZipFileIndex$ZipDirectory.buildIndex(ZipFileIndex.java:576)
+	com.sun.tools.javac.file.ZipFileIndex$ZipDirectory.access$000(ZipFileIndex.java:483)
+	com.sun.tools.javac.file.ZipFileIndex.checkIndex(ZipFileIndex.java:191)
+TRACE 300224:
+	java.io.RandomAccessFile.readBytes(RandomAccessFile.java:Unknown line)
+	java.io.RandomAccessFile.read(RandomAccessFile.java:377)
+	java.io.RandomAccessFile.readFully(RandomAccessFile.java:436)
+	com.sun.tools.javac.file.ZipFileIndex$ZipDirectory.findCENRecord(ZipFileIndex.java:538)
+TRACE 300225:
+	com.sun.tools.javac.util.List.prependList(List.java:244)
+	com.sun.tools.javac.util.List.append(List.java:272)
+	com.sun.tools.javac.file.ZipFileIndex$DirectoryEntry.getFiles(ZipFileIndex.java:731)
+	com.sun.tools.javac.file.ZipFileIndex$DirectoryEntry.access$200(ZipFileIndex.java:697)
+TRACE 300226:
+	com.sun.tools.javac.jvm.ClassReader.sigToType(ClassReader.java:731)
+	com.sun.tools.javac.jvm.ClassReader.sigToType(ClassReader.java:639)
+	com.sun.tools.javac.jvm.ClassReader.readType(ClassReader.java:562)
+	com.sun.tools.javac.jvm.ClassReader.readMethod(ClassReader.java:2009)
+TRACE 300227:
+	java.util.jar.JarFile.getInputStream(JarFile.java:446)
+	sun.misc.URLClassPath$JarLoader$2.getInputStream(URLClassPath.java:987)
+	sun.misc.Resource.cachedInputStream(Resource.java:77)
+	sun.misc.Resource.getByteBuffer(Resource.java:160)
+TRACE 300117:
+	com.sun.tools.javac.comp.Lower.<init>(Lower.java:188)
+	com.sun.tools.javac.comp.Lower.instance(Lower.java:68)
+	com.sun.tools.javac.jvm.Gen.<init>(Gen.java:127)
+	com.sun.tools.javac.jvm.Gen.instance(Gen.java:97)
+TRACE 300072:
+	java.lang.ClassLoader.findBootstrapClass(ClassLoader.java:Unknown line)
+	java.lang.ClassLoader.findBootstrapClassOrNull(ClassLoader.java:1008)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:407)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:405)
+TRACE 300082:
+	java.util.ResourceBundle.<clinit>(ResourceBundle.java:293)
+	com.sun.tools.javac.util.JavacMessages.getBundles(JavacMessages.java:121)
+	com.sun.tools.javac.util.JavacMessages.setCurrentLocale(JavacMessages.java:73)
+	com.sun.tools.javac.util.JavacMessages.<init>(JavacMessages.java:98)
+TRACE 300277:
+	com.sun.tools.javac.comp.Check.checkMethod(Check.java:915)
+	com.sun.tools.javac.comp.Attr.checkMethod(Attr.java:3858)
+	com.sun.tools.javac.comp.Attr.checkIdInternal(Attr.java:3616)
+	com.sun.tools.javac.comp.Attr.checkMethodIdInternal(Attr.java:3527)
+TRACE 300278:
+	com.sun.tools.javac.util.Names.fromUtf(Names.java:344)
+	com.sun.tools.javac.jvm.ClassReader.classSigToType(ClassReader.java:761)
+	com.sun.tools.javac.jvm.ClassReader.sigToType(ClassReader.java:691)
+	com.sun.tools.javac.jvm.ClassReader.sigToType(ClassReader.java:639)
+TRACE 300065:
+	java.io.FilePermissionCollection.<init>(FilePermission.java:749)
+	java.io.FilePermission.newPermissionCollection(FilePermission.java:680)
+	java.security.Permissions.getPermissionCollection(Permissions.java:254)
+	java.security.Permissions.add(Permissions.java:132)
+TRACE 300036:
+	sun.misc.Perf$GetPerfAction.run(Perf.java:97)
+	sun.misc.Perf$GetPerfAction.run(Perf.java:89)
+	java.security.AccessController.doPrivileged(AccessController.java:Unknown line)
+	sun.misc.PerfCounter.<clinit>(PerfCounter.java:52)
+TRACE 300110:
+	com.sun.tools.javac.code.Symtab.<init>(Symtab.java:393)
+	com.sun.tools.javac.code.Symtab.instance(Symtab.java:61)
+	com.sun.tools.javac.jvm.ClassReader.<init>(ClassReader.java:286)
+	com.sun.tools.javac.jvm.ClassReader.instance(ClassReader.java:249)
+TRACE 300111:
+	java.lang.Object.getClass(Object.java:Unknown line)
+	java.net.URL.isBuiltinStreamHandler(URL.java:1426)
+	java.net.URLStreamHandler.setURL(URLStreamHandler.java:541)
+	java.net.URLStreamHandler.setURL(URLStreamHandler.java:596)
+TRACE 300112:
+	java.net.URLClassLoader.findClass(URLClassLoader.java:382)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:418)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:405)
+	sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:355)
+TRACE 300114:
+	com.sun.tools.javac.comp.Attr.<init>(Attr.java:115)
+	com.sun.tools.javac.comp.Attr.instance(Attr.java:102)
+	com.sun.tools.javac.comp.Resolve.<init>(Resolve.java:122)
+	com.sun.tools.javac.comp.Resolve.instance(Resolve.java:158)
+TRACE 300113:
+	java.lang.ClassLoader.loadClass(ClassLoader.java:418)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:405)
+	sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:355)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:351)
+TRACE 300216:
+	com.sun.tools.javac.file.FSInfo.getJarClassPath(FSInfo.java:73)
+	com.sun.tools.javac.file.CacheFSInfo.getJarClassPath(CacheFSInfo.java:94)
+	com.sun.tools.javac.file.Locations$Path.addJarClassPath(Locations.java:305)
+	com.sun.tools.javac.file.Locations$Path.addFile(Locations.java:296)
+CPU SAMPLES BEGIN (total = 36) Mon Nov 16 11:38:13 2020
+rank   self  accum   count trace method
+   1 30.56% 30.56%      11 300080 java.util.zip.ZipFile.read
+   2  5.56% 36.11%       2 300069 java.lang.ClassLoader.defineClass1
+   3  2.78% 38.89%       1 300218 com.sun.tools.javac.file.ZipFileIndex.getRelativeDirectory
+   4  2.78% 41.67%       1 300142 java.util.regex.Pattern$CharPropertyNames.defClone
+   5  2.78% 44.44%       1 300186 com.sun.tools.javac.tree.TreeMaker.MethodDef
+   6  2.78% 47.22%       1 300171 com.sun.tools.javac.parser.Scanner.<init>
+   7  2.78% 50.00%       1 300116 java.util.zip.ZipFile.getEntry
+   8  2.78% 52.78%       1 300223 com.sun.tools.javac.file.ZipFileIndex$ZipDirectory.readEntry
+   9  2.78% 55.56%       1 300224 java.io.RandomAccessFile.readBytes
+  10  2.78% 58.33%       1 300225 com.sun.tools.javac.util.List.prependList
+  11  2.78% 61.11%       1 300226 com.sun.tools.javac.jvm.ClassReader.sigToType
+  12  2.78% 63.89%       1 300227 java.util.jar.JarFile.getInputStream
+  13  2.78% 66.67%       1 300117 com.sun.tools.javac.comp.Lower.<init>
+  14  2.78% 69.44%       1 300072 java.lang.ClassLoader.findBootstrapClass
+  15  2.78% 72.22%       1 300082 java.util.ResourceBundle.<clinit>
+  16  2.78% 75.00%       1 300277 com.sun.tools.javac.comp.Check.checkMethod
+  17  2.78% 77.78%       1 300278 com.sun.tools.javac.util.Names.fromUtf
+  18  2.78% 80.56%       1 300065 java.io.FilePermissionCollection.<init>
+  19  2.78% 83.33%       1 300036 sun.misc.Perf$GetPerfAction.run
+  20  2.78% 86.11%       1 300110 com.sun.tools.javac.code.Symtab.<init>
+  21  2.78% 88.89%       1 300111 java.lang.Object.getClass
+  22  2.78% 91.67%       1 300112 java.net.URLClassLoader.findClass
+  23  2.78% 94.44%       1 300114 com.sun.tools.javac.comp.Attr.<init>
+  24  2.78% 97.22%       1 300113 java.lang.ClassLoader.loadClass
+  25  2.78% 100.00%       1 300216 com.sun.tools.javac.file.FSInfo.getJarClassPath
+CPU SAMPLES END

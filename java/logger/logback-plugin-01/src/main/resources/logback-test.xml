@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="LOG_PREFIX" value="${POD_NAME:-ext-bridge}"/>
+
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <Target>System.out</Target>
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%-5p] [%X{request_id}] [%thread] %c{1}:%L %m%n%throwable</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>log/${LOG_PREFIX}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.mySizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>log/${POD_NAME:-service}.log.%d{yyyy-MM-dd}.%i</fileNamePattern>
+            <maxHistory>10</maxHistory>
+            <maxFileSize>100MB</maxFileSize>
+            <totalSizeCap>1500MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%-5p] [%X{request_id}] [%thread] %c{1}:%L %m%n%throwable</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="async_file" class="ch.qos.logback.classic.myAsyncAppender">
+        <appender-ref ref="file"/>
+        <queueSize>8192</queueSize>
+        <neverBlock>true</neverBlock>
+    </appender>
+
+    <logger name="co.my.tsp.ext.bridge" level="DEBUG"/>
+
+    <root level="INFO">
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="async_file"/>
+    </root>
+</configuration>

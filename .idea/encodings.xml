@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/apollo/apollo-mega/spring-apollo/springboot-apollo-test-01/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/apollo/apollo-mega/spring-apollo/springboot-apollo-test-01/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/java/jdk11/jvm-jdk11/jvm-jdk11-gc-test01/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/java/jvm/jvm_metrics_test_01/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/java/logger/logback-hello-01/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/java/logger/logback-hello-01/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/java/logger/logback-plugin-01/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/java/logger/logback-plugin-01/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/java/logger/logger-apollo-test-05/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/java/logger/logger-java-springprofile-02/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/java/logger/logger-springboot-apollo-04/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/java/logger/logger-springboot-apollo-04/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/java/logger/logger-springboot-springprofile-03/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/java/logger/logger-springboot-springprofile-03/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/metrics/metrics-springboot/metrics-springboot-test-01/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/metrics/metrics-springboot/metrics-springboot-test-01/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mybatis-generator/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sentinel/sentinel-java/sentinel-java-test-01/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sentinel/sentinel-java/sentinel-java-test-01/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sentinel/sentinel-springboot/sentinel-springboot-example-01/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springboot/mybatis/mybatis-p6spy/p6spy-test-02/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springboot/mybatis/mybatis-p6spy/p6spy-test-02/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springboot/mybatis/mybatis-p6spy/p6spy-test-connect-5-04/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springboot/mybatis/mybatis-p6spy/p6spy-test-connect-5-04/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springboot/mybatis/mybatis-p6spy/p6spy-test-connect-6-03/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springboot/mybatis/mybatis-p6spy/p6spy-test-connect-6-03/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springboot/mybatis/mybatis-p6spy/p6spy-test-connect-8-05/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springboot/mybatis/mybatis-p6spy/p6spy-test-connect-8-05/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springboot/mybatis/mybatis-plugin/mybatis-plugin-test-02/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springboot/mybatis/mybatis-plugin/mybatis-plugin-test-02/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springboot/proguard/proguard-example-02/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springboot/spring-test/spring-learn-test-01/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springboot/spring-test/spring-learn-test-01/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/tool/src/main/java" charset="UTF-8" />
+  </component>
+</project>

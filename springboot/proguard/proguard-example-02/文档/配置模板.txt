@@ -1,0 +1,85 @@
+首先看一下模板
+
+[@annotationtype] [[!]public|final|abstract|@ ...] [!]interface|class|enum classname
+    [extends|implements [@annotationtype] classname]
+[{
+    [@annotationtype] [[!]public|private|protected|static|volatile|transient ...] <fields> |
+                                                                      (fieldtype fieldname);
+    [@annotationtype] [[!]public|private|protected|static|synchronized|native|abstract|strictfp ...] <methods> |
+                                                                                           <init>(argumenttype,...) |
+                                                                                           classname(argumenttype,...) |
+                                                                                           (returntype methodname(argumenttype,...));
+    [@annotationtype] [[!]public|private|protected|static ... ] *;
+    ...
+}]
+方括号 : []?
+方括号代表里面的内容是可选的
+
+省略号 : …?
+代表前面被指定的条目可以有任意多个。
+
+竖线 : |?
+划分两个选项
+
+括号 : ()?
+代表整体
+
+缩进?
+用于说明意图
+
+空格?
+没有意义
+
+关键字class?可以指向任何接口或类。interface?关键字只能指向接口，enum?只能指向枚举 ,接口或者枚举前面的！表示相对应的非枚举或者接口。
+
+每个classname?都必须是全路径指定，比如：java.lang.String 内部类使用美元符”$”分开，比如： java.lang.Thread$State 类名可以使用包含以下通配符的正则表达式:
+
+??任意匹配类名中的一个字符，但是不匹配包名分隔符。例如 “mypackage.Test?” 匹配”mypackage.Test1” 和 “mypackage.Test2”,不匹配 “mypackage.Test12”.
+
+*匹配类名的任何部分除了包名分隔符，例如”mypackage.*Test*”匹配 “mypackage.Test” 和 “mypackage.YourTestApplication”,但是不匹配 “mypackage.mysubpackage.MyTest”. 或者更通俗的讲， “mypackage.*” 匹配所有 “mypackage”包里的内容,但是不匹配它子包里的内容.
+
+**?匹配所有类名的所有部分，包括报名分隔符。
+
+extend?和?implements?符号用于使用统配付来限定类. 他们效果是一样的，指定只有继承或者实现指定的类和接口。
+
+@?符号用于限定那些被指定注解符号标注的类和类成员，注解符的指定方法和类名一样
+
+域和方法的指定更像java语言，除了方法参数中没有参数名。表达式可以包含以下通配符:
+
+<?init?>?匹配任何构造函数
+
+<?fields?>?匹配任何域
+
+<?methods?>?匹配任何方法
+
+*?匹配任何方法和域
+
+注意：?上面的所有统配符都没有返回值，只有<?init?>有参数列表.
+
+方法和域还可以用正则表示指定，可以使用的通配符如下：
+
+??任意匹配方法名中的单个字符
+
+*?匹配方法命中的任意部分
+
+数据类型描述可以使用以下通配符：
+
+%?匹配任何原生类型 (“boolean”, “int”, etc, but not “void”).
+
+??任意匹配单个字符
+
+*?匹配类名的任何部分除了包名分隔符
+
+**?匹配所有类名的所有部分，包括报名分隔符。
+
+***?匹配任何类型，包括原生和非原生，数组和非数组
+
+…?匹配任意参数个数?
+？* 和 ** 永远不会匹配原生类型，而且只有 **** 匹配数组类型。举个栗子：”** get*()” 匹配?
+“java.lang.Object getObject()” 但是不匹配”float getFloat()” 也不匹配”java.lang.Object[] getObjects()”
+
+构造函数可以使用段类名（不包含包名）
+
+类访问修饰符(public private static)一般用来限制统配类和类成员. 他们限定指定的类必须拥有指定的访问修饰符.一个前置的！表示该修饰符没有被设置
+
+可以组合多个标志 (e.g. public static). 表示两个条件都要满足
