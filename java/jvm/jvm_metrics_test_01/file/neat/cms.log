@@ -1,0 +1,70 @@
+Java HotSpot(TM) 64-Bit Server VM (25.251-b08) for bsd-amd64 JRE (1.8.0_251-b08), built on Mar 12 2020 02:36:37 by "java_re" with gcc 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2336.11.00)
+// jvm的版本信息
+Memory: 4k page, physical 16777216k(1711176k free)
+// 内存信息
+
+CommandLine flags: -XX:CMSInitiatingOccupancyFraction=75 -XX:+CMSScavengeBeforeRemark -XX:CompressedClassSpaceSize=134217728 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/Users/pengyue.du/Code/Meijia/Work01/learn_test/java/jvm/jvm_metrics_test_01/file/test_file/gc_log/oom-heap-cms.bin -XX:InitialHeapSize=10485760 -XX:MaxHeapSize=10485760 -XX:MaxNewSize=3497984 -XX:MaxTenuringThreshold=6 -XX:NativeMemoryTracking=summary -XX:NewSize=3497984 -XX:OldPLABSize=16 -XX:OldSize=6987776 -XX:+PrintGC -XX:+PrintGCDateStamps -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:ThreadStackSize=512 -XX:+UseCMSInitiatingOccupancyOnly -XX:+UseCompressedClassPointers -XX:+UseCompressedOops -XX:+UseConcMarkSweepGC -XX:-UseGCOverheadLimit -XX:+UseParNewGC
+// vm参数
+
+
+2020-11-13T10:56:15.104+0000: 2.729: [GC (Allocation Failure)
+// 新生代进行垃圾收集
+带时区时间 : GC开始时间，相对JVM启动时间，单位秒 : 垃圾收集原因：申请内存不足
+2020-11-13T10:56:15.104+0000: 2.729: [ParNew: 209792K->8581K(235968K), 0.0374976 secs] 209792K->8581K(498112K), 0.0376271 secs] [Times: user=0.03 sys=0.04, real=0.04 secs]
+// 带时区时间 : GC开始时间，相对JVM启动时间，单位秒 : [垃圾收集器名称 : 收集前后年轻代使用情况 (整个年轻代容量), GC时间耗时 ] 收集前后整个堆使用情况 (整个堆容量), GC总时间 ] [GC事件在不同维度的耗时]
+// real —— 程序从开始到结束所用的时钟时间。这个时间包括其他进程使用的时间片和进程阻塞的时间（比如等待 I/O 完成）。
+// user —— 进程执行用户态代码（核心之外）所使用的时间。这是执行此进程所使用的实际 CPU 时间，其他进程和此进程阻塞的时间并不包括在内。在垃圾收集的情况下，表示 GC 线程执行所使用的 CPU 总时间。
+// sys —— 进程在内核态消耗的 CPU 时间，即在内核执行系统调用或等待系统事件所使用的 CPU 时间。
+//    user + sys 时间告诉我们程序执行实际使用的 CPU 时间。注意这里指所有的 CPU，因此如果在进程里有多个线程的话，这个时间可能会超过 real 所表示的时钟时间。
+
+// 老年代进行垃圾收集
+2020-11-13T10:56:16.748+0000: 4.373: [GC (CMS Initial Mark) [1 CMS-initial-mark: 0K(262144K)] 18592K(498112K), 0.0075138 secs] [Times: user=0.03 sys=0.00, real=0.00 secs]
+// 初始标记，只标记与根对象直接关联的对象
+// 带时区时间 : GC开始时间，相对JVM启动时间，单位秒 : [cms的初始标记阶段] [初始标记: 开始标记时老年代使用容量(老年代总容量)] 当前堆内存使用容量(整个堆容量) ] [GC事件在不同维度的耗时]
+2020-11-13T10:56:16.756+0000: 4.380: [CMS-concurrent-mark-start]
+//开始并发标记
+// 带时区时间 : GC开始时间，相对JVM启动时间，单位秒 : [cms的并发标记阶段]
+2020-11-13T10:56:16.774+0000: 4.398: [CMS-concurrent-mark: 0.018/0.018 secs] [Times: user=0.04 sys=0.01, real=0.02 secs]
+// 带时区时间 : GC开始时间，相对JVM启动时间，单位秒 : [并发标记 : CPU耗时/系统耗时(包括其他线程占用cpu导致标记线程挂起的时间) 单位秒] [GC事件在不同维度的耗时]
+2020-11-13T10:56:16.774+0000: 4.399: [CMS-concurrent-preclean-start]
+2020-11-13T10:56:16.776+0000: 4.400: [CMS-concurrent-preclean: 0.002/0.002 secs] [Times: user=0.00 sys=0.00, real=0.00 secs]
+// 预处理，清除又活跃的对象，扫描新进入老年代的对象。一些必要的清扫工作也会做，还会做一些final remark阶段需要的准备工作。
+// 带时区时间 : GC开始时间，相对JVM启动时间，单位秒 : [并发预处理 : CPU耗时/系统耗时(包括其他线程占用cpu导致标记线程挂起的时间) 单位秒] [GC事件在不同维度的耗时]
+2020-11-13T10:56:16.776+0000: 4.400: [CMS-concurrent-abortable-preclean-start]
+2020-11-13T10:56:17.876+0000: 5.501: [CMS-concurrent-abortable-preclean: 0.837/1.100 secs] [Times: user=2.99 sys=0.07, real=1.10 secs]
+// 并发可中止预清理阶段。增加这个阶段是为了避免在重新标记阶段后紧跟着发生一次垃圾清除。为了尽可能区分开垃圾清除和重新标记 ，我们尽量安排在两次垃圾清除之间运行重新标记阶段。
+// 带时区时间 : GC开始时间，相对JVM启动时间，单位秒 : [并发可中止预清理 : CPU耗时/系统耗时(包括其他线程占用cpu导致标记线程挂起的时间) 单位秒] [GC事件在不同维度的耗时]
+2020-11-13T10:56:17.877+0000: 5.502: [GC (CMS Final Remark) [YG occupancy: 140340 K (235968 K)]
+// 年轻代占用总内存的情况，年轻代当前占用内存(整个年轻代容量)
+2020-11-13T10:56:17.877+0000: 5.502: [GC (CMS Final Remark)
+// 重新标记阶段，会暂停所有用户线程。该阶段的任务是完成标记整个年老代的所有的存活对象。
+2020-11-13T10:56:17.877+0000: 5.502: [ParNew: 140340K->15082K(235968K), 0.0801466 secs] 140340K->19224K(498112K), 0.0802081 secs] [Times: user=0.10 sys=0.05, real=0.08 secs]
+// 在重新标记之前进行一次ygc
+2020-11-13T10:56:17.958+0000: 5.582: [Rescan (parallel) , 0.0059192 secs]
+// 重新标记所花费的时间
+2020-11-13T10:56:17.964+0000: 5.588: [weak refs processing, 0.0000279 secs]
+// 处理弱引用花费的时间
+2020-11-13T10:56:17.964+0000: 5.588: [class unloading, 0.0040907 secs]
+// 卸载不用的class花费的时间
+2020-11-13T10:56:17.968+0000: 5.592: [scrub symbol table, 0.0053140 secs]
+// 清理类级元数据和内部化字符串的符号的耗时。
+2020-11-13T10:56:17.973+0000: 5.597: [scrub string table, 0.0007218 secs][1 CMS-remark: 4142K(262144K)] 19224K(498112K), 0.0966950 secs] [Times: user=0.13 sys=0.05, real=0.10 secs]
+// 清理字符串表的耗时 [老年代使用情况] 整个堆使用情况 重新标记耗时] [GC事件在不同维度的耗时]
+2020-11-13T10:56:17.974+0000: 5.598: [CMS-concurrent-sweep-start]
+// 开始并发清除
+2020-11-13T10:56:17.977+0000: 5.602: [CMS-concurrent-sweep: 0.003/0.003 secs] [Times: user=0.01 sys=0.00, real=0.00 secs]
+// [ 并发清除的 CPU耗时/系统耗时 ] [GC事件在不同维度的耗时]
+2020-11-13T10:56:17.977+0000: 5.602: [CMS-concurrent-reset-start]
+2020-11-13T10:56:18.060+0000: 5.684: [CMS-concurrent-reset: 0.073/0.083 secs] [Times: user=0.23 sys=0.06, real=0.09 secs]
+// 开始并发重置，重新设置CMS算法内部的数据结构，准备下一个CMS生命周期的使用。
+// [ 并发清除的 CPU耗时/系统耗时 ] [GC事件在不同维度的耗时]
+
+另外：
+2020-11-18T11:06:05.550-0800: 22.028: [Full GC (Allocation Failure)
+// 内存不足进行full gc
+2020-11-18T11:06:05.431-0800: 21.909: [Full GC (System.gc())
+// 手动触发的full gc
+
+
+
+

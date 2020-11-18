@@ -1,0 +1,17 @@
+
+
+2020-11-13T10:56:15.104+0000: 2.729: [GC (Allocation Failure) 2020-11-13T10:56:15.104+0000: 2.729: [ParNew: 209792K->8581K(235968K), 0.0374976 secs] 209792K->8581K(498112K), 0.0376271 secs] [Times: user=0.03 sys=0.04, real=0.04 secs]
+2020-11-13T10:56:16.671+0000: 4.296: [GC (Allocation Failure) 2020-11-13T10:56:16.671+0000: 4.296: [ParNew: 218373K->16414K(235968K), 0.0569303 secs] 218373K->16414K(498112K), 0.0571455 secs] [Times: user=0.06 sys=0.04, real=0.06 secs]
+2020-11-13T10:56:16.748+0000: 4.373: [GC (CMS Initial Mark) [1 CMS-initial-mark: 0K(262144K)] 18592K(498112K), 0.0075138 secs] [Times: user=0.03 sys=0.00, real=0.00 secs]
+2020-11-13T10:56:16.756+0000: 4.380: [CMS-concurrent-mark-start]
+2020-11-13T10:56:16.774+0000: 4.398: [CMS-concurrent-mark: 0.018/0.018 secs] [Times: user=0.04 sys=0.01, real=0.02 secs]
+2020-11-13T10:56:16.774+0000: 4.399: [CMS-concurrent-preclean-start]
+2020-11-13T10:56:16.776+0000: 4.400: [CMS-concurrent-preclean: 0.002/0.002 secs] [Times: user=0.00 sys=0.00, real=0.00 secs]
+2020-11-13T10:56:16.776+0000: 4.400: [CMS-concurrent-abortable-preclean-start]
+2020-11-13T10:56:17.876+0000: 5.501: [CMS-concurrent-abortable-preclean: 0.837/1.100 secs] [Times: user=2.99 sys=0.07, real=1.10 secs]
+2020-11-13T10:56:17.877+0000: 5.502: [GC (CMS Final Remark) [YG occupancy: 140340 K (235968 K)]2020-11-13T10:56:17.877+0000: 5.502: [GC (CMS Final Remark) 2020-11-13T10:56:17.877+0000: 5.502: [ParNew: 140340K->15082K(235968K), 0.0801466 secs] 140340K->19224K(498112K), 0.0802081 secs] [Times: user=0.10 sys=0.05, real=0.08 secs]
+2020-11-13T10:56:17.958+0000: 5.582: [Rescan (parallel) , 0.0059192 secs]2020-11-13T10:56:17.964+0000: 5.588: [weak refs processing, 0.0000279 secs]2020-11-13T10:56:17.964+0000: 5.588: [class unloading, 0.0040907 secs]2020-11-13T10:56:17.968+0000: 5.592: [scrub symbol table, 0.0053140 secs]2020-11-13T10:56:17.973+0000: 5.597: [scrub string table, 0.0007218 secs][1 CMS-remark: 4142K(262144K)] 19224K(498112K), 0.0966950 secs] [Times: user=0.13 sys=0.05, real=0.10 secs]
+2020-11-13T10:56:17.974+0000: 5.598: [CMS-concurrent-sweep-start]
+2020-11-13T10:56:17.977+0000: 5.602: [CMS-concurrent-sweep: 0.003/0.003 secs] [Times: user=0.01 sys=0.00, real=0.00 secs]
+2020-11-13T10:56:17.977+0000: 5.602: [CMS-concurrent-reset-start]
+2020-11-13T10:56:18.060+0000: 5.684: [CMS-concurrent-reset: 0.073/0.083 secs] [Times: user=0.23 sys=0.06, real=0.09 secs]

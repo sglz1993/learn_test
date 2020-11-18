@@ -44,13 +44,23 @@ public class LogTest {
         outOfMemoryError();
     }
 
+    /**
+     * 测试G1垃圾收集器
+     * -Xms2M -Xmx2M -XX:NativeMemoryTracking=summary -XX:CompressedClassSpaceSize=28m -XshowSettings:vm -Xss512K -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/Users/pengyue.du/Code/Meijia/Work01/learn_test/java/jvm/jvm_metrics_test_01/file/test_file/gc_log/oom-heap-g1.bin -XX:+PrintGCDateStamps -XX:+PrintGCDetails -Xloggc:/Users/pengyue.du/Code/Meijia/Work01/learn_test/java/jvm/jvm_metrics_test_01/file/test_file/gc_log/gc_g1.log
+     */
+    @Test
+    public void testG1Log() {
+        outOfMemoryError();
+    }
+
     private void outOfMemoryError() {
         int i = 0;
         List<Object> list = new ArrayList<>();
         while (true){
-            list.add(getString(1));
+            list.add(getString(20));
+            System.gc();
             try {
-                Thread.sleep(10L);
+                Thread.sleep(1L);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -63,11 +73,6 @@ public class LogTest {
             stringBuffer.append(UUID.randomUUID().toString());
         }
         return stringBuffer;
-    }
-
-    @Test
-    public void testG1Log() {
-        outOfMemoryError();
     }
 
 }
