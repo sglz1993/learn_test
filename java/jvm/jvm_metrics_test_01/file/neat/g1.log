@@ -1,0 +1,269 @@
+Java HotSpot(TM) 64-Bit Server VM (25.251-b08) for bsd-amd64 JRE (1.8.0_251-b08), built on Mar 12 2020 02:36:37 by "java_re" with gcc 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2336.11.00)
+// java版本信息
+Memory: 4k page, physical 16777216k(1826828k free)
+//内存信息
+/proc/meminfo:
+
+CommandLine flags: -XX:CompressedClassSpaceSize=29360128 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/Users/pengyue.du/Code/Meijia/Work01/learn_test/java/jvm/jvm_metrics_test_01/file/test_file/gc_log/oom-heap-g1.bin -XX:InitialHeapSize=2097152 -XX:MaxHeapSize=2097152 -XX:NativeMemoryTracking=summary -XX:+PrintGC -XX:+PrintGCDateStamps -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:ThreadStackSize=512 -XX:+UseCompressedClassPointers -XX:+UseCompressedOops -XX:+UseG1GC
+//命令行参数
+2020-11-18T14:34:14.743-0800: 0.098: [GC pause (G1 Evacuation Pause) (young), 0.0013209 secs]
+// 表示新生代Eden的垃圾收集
+// 带时区的时间 : jvm启动相对时间 : 收集的类型 (young Eden区), 花费的时间
+   [Parallel Time: 0.7 ms, GC Workers: 10]
+   // 并行收集任务在运行过程中引发的STW时间，从新生代垃圾收集开始到最后一个任务结束； GC Workers表示负责收集的线程个数， 参数-XX:ParallelGCThreads设置，默认 CPU个数 * 5/8
+      [GC Worker Start (ms): Min: 98.3, Avg: 98.4, Max: 98.5, Diff: 0.1]
+      // 第一个垃圾收集线程开始工作时JVM启动后经过的时间（min）；最后一个垃圾收集线程开始工作时JVM启动后经过的时间（max）
+      [Ext Root Scanning (ms): Min: 0.1, Avg: 0.2, Max: 0.5, Diff: 0.4, Sum: 2.1]
+      // 扫描root集合（线程栈、JNI、全局变量、系统表等等）花费的时间，扫描root集合是垃圾收集的起点，尝试找到是否有root集合中的节点指向当前的收集集合（CSet）
+      [Update RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      // 每个分区都有自己的RSet，用来记录其他分区指向当前分区的指针，如果RSet有更新，G1中会有一个post-write barrier管理跨分区的引用——新的被引用的card会被标记为dirty，并放入一个日志缓冲区，如果这个日志缓冲区满了会被加入到一个全局的缓冲区，在JVM运行的过程中还有线程在并发处理这个全局日志缓冲区的dirty card。Update RS表示允许垃圾收集线程处理本次垃圾收集开始前没有处理好的日志缓冲区，这可以确保当前分区的RSet是最新的。
+         [Processed Buffers: Min: 0, Avg: 0.0, Max: 0, Diff: 0, Sum: 0]
+         // 表示在Update RS这个过程中处理多少个日志缓冲区
+      [Scan RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      // 扫描每个新生代分区的RSet，找出有多少指向当前分区的引用来自CSet。
+      [Code Root Scanning (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      // 扫描每个新生代分区的RSet，找出有多少指向当前分区的引用来自CSet。
+      [Object Copy (ms): Min: 0.0, Avg: 0.3, Max: 0.3, Diff: 0.3, Sum: 2.8]
+      // 在疏散暂停期间，所有在CSet中的分区必须被转移疏散，Object Copy就负责将当前分区中存活的对象拷贝到新的分区。
+      [Termination (ms): Min: 0.0, Avg: 0.0, Max: 0.1, Diff: 0.1, Sum: 0.3]
+      // 当一个垃圾收集线程完成任务时，它就会进入一个临界区，并尝试帮助其他垃圾线程完成任务（steal outstanding tasks），min表示该垃圾收集线程什么时候尝试terminatie，max表示该垃圾收集回收线程什么时候真正terminated。
+         [Termination Attempts: Min: 1, Avg: 2.9, Max: 5, Diff: 4, Sum: 29]
+         // 如果一个垃圾收集线程成功盗取了其他线程的任务，那么它会再次盗取更多的任务或再次尝试terminate，每次重新terminate的时候，这个数值就会增加。
+      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.2]
+      // 垃圾收集线程在完成其他任务的时间
+      [GC Worker Total (ms): Min: 0.5, Avg: 0.5, Max: 0.6, Diff: 0.1, Sum: 5.4]
+      // 展示每个垃圾收集线程的最小、最大、平均、差值和总共时间。
+      [GC Worker End (ms): Min: 99.0, Avg: 99.0, Max: 99.0, Diff: 0.0]
+      // min表示最早结束的垃圾收集线程结束时该JVM启动后的时间；max表示最晚结束的垃圾收集线程结束时该JVM启动后的时间。理想情况下，你希望它们快速结束，并且最好是同一时间结束。
+   [Code Root Fixup: 0.0 ms]
+   // 释放用于管理并行垃圾收集活动的数据结构，应该接近于0，该步骤是线性执行的；
+   [Code Root Purge: 0.0 ms]
+   // 清理更多的数据结构，应该很快，耗时接近于0，也是线性执行。
+   [Clear CT: 0.1 ms]
+   // 清理card table
+   [Other: 0.5 ms]
+   // 其他耗时
+      [Choose CSet: 0.0 ms]
+      // 选择要进行回收的分区放入CSet（G1选择的标准是垃圾最多的分区优先，也就是存活对象率最低的分区优先）
+      [Ref Proc: 0.3 ms]
+      // 处理Java中的各种引用——soft、weak、final、phantom、JNI等等。
+      [Ref Enq: 0.0 ms]
+      // 遍历所有的引用，将不能回收的放入pending列表
+      [Redirty Cards: 0.1 ms]
+      // 在回收过程中被修改的card将会被重置为dirty
+      [Humongous Register: 0.0 ms]
+      // JDK8u60提供了一个特性，巨型对象可以在新生代收集的时候被回收——通过G1ReclaimDeadHumongousObjectsAtYoungGC设置，默认为true。
+      [Humongous Reclaim: 0.0 ms]
+      // 做下列任务的时间：确保巨型对象可以被回收、释放该巨型对象所占的分区，重置分区类型，并将分区还到free列表，并且更新空闲空间大小。
+      [Free CSet: 0.0 ms]
+      // 将要释放的分区还回到free列表。
+   [Eden: 1024.0K(1024.0K)->0.0B(1024.0K) Survivors: 0.0B->1024.0K Heap: 1024.0K(2048.0K)->601.7K(2048.0K)]
+   // Eden收集，原因 分配了1024k，使用了1024k； 收集完大小为1024k，使用为0b
+   // survivors区从0 变为1024k
+   // 堆最大2048k，使用1024k，收集完后变为 堆最大2048k，使用601.7k
+ [Times: user=0.00 sys=0.00, real=0.00 secs]
+ // [GC事件在不同维度的耗时]
+
+
+
+2020-11-13T11:13:30.968+0000: 746.257: [GC pause (G1 Evacuation Pause) (young) (initial-mark), 0.0155328 secs]
+// 为了充分利用STW的机会来trace所有可达（存活）的对象，initial-mark阶段是作为新生代垃圾收集中的一部分存在的（搭便车）。initial-mark设置了两个TAMS（top-at-mark-start）变量，用来区分存活的对象和在并发标记阶段新分配的对象。在TAMS之前的所有对象，在当前周期内都会被视作存活的。
+   [Parallel Time: 7.9 ms, GC Workers: 4]
+      [GC Worker Start (ms): Min: 746257.3, Avg: 746257.3, Max: 746257.4, Diff: 0.1]
+      [Ext Root Scanning (ms): Min: 1.7, Avg: 1.8, Max: 2.0, Diff: 0.2, Sum: 7.4]
+      [Update RS (ms): Min: 1.1, Avg: 1.3, Max: 1.5, Diff: 0.5, Sum: 5.1]
+         [Processed Buffers: Min: 5, Avg: 11.5, Max: 17, Diff: 12, Sum: 46]
+      [Scan RS (ms): Min: 0.3, Avg: 0.6, Max: 0.9, Diff: 0.6, Sum: 2.5]
+      [Code Root Scanning (ms): Min: 0.3, Avg: 0.6, Max: 1.0, Diff: 0.7, Sum: 2.3]
+      [Object Copy (ms): Min: 3.0, Avg: 3.2, Max: 3.4, Diff: 0.3, Sum: 12.7]
+      [Termination (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+         [Termination Attempts: Min: 1, Avg: 1.0, Max: 1, Diff: 0, Sum: 4]
+      [GC Worker Other (ms): Min: 0.0, Avg: 0.1, Max: 0.1, Diff: 0.1, Sum: 0.2]
+      [GC Worker Total (ms): Min: 7.5, Avg: 7.6, Max: 7.6, Diff: 0.1, Sum: 30.2]
+      [GC Worker End (ms): Min: 746264.8, Avg: 746264.9, Max: 746264.9, Diff: 0.1]
+   [Code Root Fixup: 0.1 ms]
+   [Code Root Purge: 0.1 ms]
+   [Clear CT: 0.2 ms]
+   [Other: 7.2 ms]
+      [Choose CSet: 0.0 ms]
+      [Ref Proc: 6.6 ms]
+      [Ref Enq: 0.1 ms]
+      [Redirty Cards: 0.1 ms]
+      [Humongous Register: 0.0 ms]
+      [Humongous Reclaim: 0.0 ms]
+      [Free CSet: 0.2 ms]
+   [Eden: 304.0M(304.0M)->0.0B(299.0M) Survivors: 3072.0K->8192.0K Heap: 344.0M(512.0M)->45917.1K(512.0M)]
+ [Times: user=0.03 sys=0.00, real=0.02 secs]
+2020-11-13T11:13:30.984+0000: 746.273: [GC concurrent-root-region-scan-start]
+// 根分区扫描开始，根分区扫描主要扫描的是新的survivor分区，找到这些分区内的对象指向当前分区的引用，如果发现有引用，则做个记录；
+2020-11-13T11:13:30.996+0000: 746.285: [GC concurrent-root-region-scan-end, 0.0127253 secs]
+// 根分区扫描结束,消耗时间
+2020-11-13T11:13:30.997+0000: 746.285: [GC concurrent-mark-start]
+// 并发标记阶段开始。（1）并发标记阶段的线程是跟应用线程一起运行的，不会STW，所以称为并发；并发标记阶段的垃圾收集线程，默认值是Parallel Thread个数的25%，这个值也可以用参数-XX:ConcGCThreads设置；（2）trace整个堆，并使用位图标记所有存活的对象，
+// 因为在top TAMS之前的对象是隐式存活的，所以这里只需要标记出那些在top TAMS之后、阈值之前的；（3）记录在并发标记阶段的变更，G1这里使用了SATB算法，该算法要求在垃圾收集开始的时候给堆做一个快照，在垃圾收集过程中这个快照是不变的，
+// 但实际上肯定有些对象的引用会发生变化，这时候G1使用了pre-write barrier记录这种变更，并将这个记录存放在一个SATB缓冲区中，如果该缓冲区满了就会将它加入到一个全局的缓冲区，同时G1有一个线程在并行得处理这个全局缓冲区；（4）在并发标记过程中，会记录每个分区的存活对象占整个分区的大小的比率；
+2020-11-13T11:13:31.072+0000: 746.361: [GC concurrent-mark-end, 0.0754411 secs]
+// 并发标记阶段结束，耗时
+2020-11-13T11:13:31.072+0000: 746.361: [GC remark 2020-11-13T11:13:31.072+0000: 746.361: [Finalize Marking, 0.0001899 secs] 2020-11-13T11:13:31.073+0000: 746.361: [GC ref-proc, 0.0012795 secs] 2020-11-13T11:13:31.074+0000: 746.363: [Unloading, 0.0138434 secs], 0.0157386 secs]
+ [Times: user=0.05 sys=0.00, real=0.01 secs]
+// Finalize Marking：Finalizer列表里的Finalizer对象处理，耗时；
+// GC ref-proc：引用（soft、weak、final、phantom、JNI等等）处理，耗时；
+// Unloading：类卸载，耗时；
+2020-11-13T11:13:31.089+0000: 746.378: [GC cleanup 47202K->47202K(512M), 0.0018218 secs]
+ [Times: user=0.00 sys=0.00, real=0.01 secs]
+// 清理阶段，也会Stop the World
+//    计算出最后存活的对象：标记出initial-mark阶段后分配的对象；标记出至少有一个存活对象的分区；
+//    为下一个并发标记阶段做准备，previous和next位图会被清理；
+//    没有存活对象的老年代分区和巨型对象分区会被释放和清理；
+//    处理没有任何存活对象的分区的RSet；
+//    所有的老年代分区会按照自己的存活率（存活对象占整个分区大小的比例）进行排序，为后面的CSet选择过程做准备；
+2020-11-13T11:01:19.430+0000: 746.718: [GC concurrent-cleanup-start]
+// 并发清理阶段启动；将完全清理好的分区加入到二级free列表，等待最终还会到总体的free列表；
+2020-11-13T11:01:19.430+0000: 746.718: [GC concurrent-cleanup-end, 0.0000370 secs]
+// 并发清理阶段结束，耗时
+
+
+2020-11-13T11:01:07.129+0000: 2.418: [GC pause (Metadata GC Threshold) (young) (initial-mark), 0.0122343 secs]
+   [Parallel Time: 6.4 ms, GC Workers: 4]
+      [GC Worker Start (ms): Min: 2418.4, Avg: 2418.4, Max: 2418.5, Diff: 0.1]
+      [Ext Root Scanning (ms): Min: 0.9, Avg: 1.0, Max: 1.0, Diff: 0.2, Sum: 3.9]
+      [Update RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+         [Processed Buffers: Min: 0, Avg: 0.0, Max: 0, Diff: 0, Sum: 0]
+      [Scan RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Code Root Scanning (ms): Min: 0.0, Avg: 0.6, Max: 1.8, Diff: 1.8, Sum: 2.3]
+      [Object Copy (ms): Min: 3.3, Avg: 4.6, Max: 5.3, Diff: 2.0, Sum: 18.4]
+      [Termination (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+         [Termination Attempts: Min: 1, Avg: 1.2, Max: 2, Diff: 1, Sum: 5]
+      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [GC Worker Total (ms): Min: 6.1, Avg: 6.2, Max: 6.2, Diff: 0.1, Sum: 24.8]
+      [GC Worker End (ms): Min: 2424.6, Avg: 2424.6, Max: 2424.6, Diff: 0.0]
+   [Code Root Fixup: 0.1 ms]
+   [Code Root Purge: 0.0 ms]
+   [Clear CT: 0.2 ms]
+   [Other: 5.6 ms]
+      [Choose CSet: 0.0 ms]
+      [Ref Proc: 5.2 ms]
+      [Ref Enq: 0.0 ms]
+      [Redirty Cards: 0.1 ms]
+      [Humongous Register: 0.0 ms]
+      [Humongous Reclaim: 0.0 ms]
+      [Free CSet: 0.1 ms]
+   [Eden: 55296.0K(294.0M)->0.0B(299.0M) Survivors: 13312.0K->8192.0K Heap: 67586.0K(512.0M)->8192.0K(512.0M)]
+ [Times: user=0.04 sys=0.00, real=0.02 secs]
+2020-11-13T11:01:07.142+0000: 2.431: [GC concurrent-root-region-scan-start]
+2020-11-13T11:01:07.150+0000: 2.439: [GC concurrent-root-region-scan-end, 0.0086128 secs]
+2020-11-13T11:01:07.150+0000: 2.439: [GC concurrent-mark-start]
+2020-11-13T11:01:07.151+0000: 2.440: [GC concurrent-mark-end, 0.0009389 secs]
+2020-11-13T11:01:07.152+0000: 2.440: [GC remark 2020-11-13T11:01:07.152+0000: 2.440: [Finalize Marking, 0.0003076 secs] 2020-11-13T11:01:07.152+0000: 2.441: [GC ref-proc, 0.0001941 secs] 2020-11-13T11:01:07.152+0000: 2.441: [Unloading, 0.0031480 secs], 0.0039991 secs]
+ [Times: user=0.02 sys=0.00, real=0.00 secs]
+2020-11-13T11:01:07.156+0000: 2.445: [GC cleanup 10239K->10239K(512M), 0.0011299 secs]
+ [Times: user=0.00 sys=0.00, real=0.00 secs]
+
+
+2020-11-18T14:34:14.773-0800: 0.129: [Full GC (Allocation Failure)  1625K->493K(2048K), 0.0019487 secs]
+   [Eden: 0.0B(1024.0K)->0.0B(1024.0K) Survivors: 0.0B->0.0B Heap: 1625.7K(2048.0K)->493.5K(2048.0K)], [Metaspace: 2852K->2852K(36864K)]
+ [Times: user=0.00 sys=0.00, real=0.00 secs]
+
+
+
+
+
+
+// openJDK-bug  无效的GC https://www.jianshu.com/p/ecc57a81f73c
+2020-11-13T11:01:06.901+0000: 2.189: [GC pause (GCLocker Initiated GC) (young), 0.0621854 secs]
+   [Parallel Time: 26.6 ms, GC Workers: 4]
+      [GC Worker Start (ms): Min: 2189.6, Avg: 2189.6, Max: 2189.7, Diff: 0.1]
+      [Ext Root Scanning (ms): Min: 4.3, Avg: 7.3, Max: 8.5, Diff: 4.3, Sum: 29.2]
+      [Update RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+         [Processed Buffers: Min: 0, Avg: 0.0, Max: 0, Diff: 0, Sum: 0]
+      [Scan RS (ms): Min: 0.0, Avg: 0.1, Max: 0.2, Diff: 0.2, Sum: 0.3]
+      [Code Root Scanning (ms): Min: 0.0, Avg: 1.2, Max: 3.0, Diff: 3.0, Sum: 4.7]
+      [Object Copy (ms): Min: 11.9, Avg: 14.2, Max: 17.7, Diff: 5.8, Sum: 56.9]
+      [Termination (ms): Min: 0.0, Avg: 3.5, Max: 4.8, Diff: 4.8, Sum: 14.1]
+         [Termination Attempts: Min: 1, Avg: 3.8, Max: 8, Diff: 7, Sum: 15]
+      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+      [GC Worker Total (ms): Min: 26.3, Avg: 26.3, Max: 26.4, Diff: 0.2, Sum: 105.3]
+      [GC Worker End (ms): Min: 2215.9, Avg: 2216.0, Max: 2216.0, Diff: 0.1]
+   [Code Root Fixup: 0.1 ms]
+   [Code Root Purge: 0.0 ms]
+   [Clear CT: 0.3 ms]
+   [Other: 35.2 ms]
+      [Choose CSet: 0.0 ms]
+      [Ref Proc: 34.6 ms]
+      [Ref Enq: 0.1 ms]
+      [Redirty Cards: 0.2 ms]
+      [Humongous Register: 0.0 ms]
+      [Humongous Reclaim: 0.0 ms]
+      [Free CSet: 0.2 ms]
+   [Eden: 301.0M(301.0M)->0.0B(294.0M) Survivors: 6144.0K->13312.0K Heap: 306.5M(512.0M)->12800.0K(512.0M)]
+ [Times: user=0.07 sys=0.07, real=0.06 secs]
+
+
+
+
+---中止了，o(╯□╰)o
+2020-11-18T14:34:14.843-0800: 0.199: [GC pause (G1 Evacuation Pause) (young) (initial-mark), 0.0007228 secs]
+   [Parallel Time: 0.4 ms, GC Workers: 10]
+      [GC Worker Start (ms): Min: 198.6, Avg: 198.7, Max: 198.7, Diff: 0.1]
+      [Ext Root Scanning (ms): Min: 0.0, Avg: 0.1, Max: 0.1, Diff: 0.1, Sum: 0.9]
+      [Update RS (ms): Min: 0.0, Avg: 0.0, Max: 0.1, Diff: 0.1, Sum: 0.5]
+         [Processed Buffers: Min: 0, Avg: 0.9, Max: 1, Diff: 1, Sum: 9]
+      [Scan RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Code Root Scanning (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Object Copy (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Termination (ms): Min: 0.0, Avg: 0.2, Max: 0.2, Diff: 0.2, Sum: 1.5]
+         [Termination Attempts: Min: 1, Avg: 1.0, Max: 1, Diff: 0, Sum: 10]
+      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [GC Worker Total (ms): Min: 0.2, Avg: 0.3, Max: 0.4, Diff: 0.1, Sum: 3.0]
+      [GC Worker End (ms): Min: 198.9, Avg: 199.0, Max: 199.0, Diff: 0.1]
+   [Code Root Fixup: 0.0 ms]
+   [Code Root Purge: 0.0 ms]
+   [Clear CT: 0.1 ms]
+   [Other: 0.2 ms]
+      [Choose CSet: 0.0 ms]
+      [Ref Proc: 0.1 ms]
+      [Ref Enq: 0.0 ms]
+      [Redirty Cards: 0.1 ms]
+      [Humongous Register: 0.0 ms]
+      [Humongous Reclaim: 0.0 ms]
+      [Free CSet: 0.0 ms]
+   [Eden: 0.0B(1024.0K)->0.0B(1024.0K) Survivors: 0.0B->0.0B Heap: 1564.2K(2048.0K)->1564.2K(2048.0K)]
+ [Times: user=0.00 sys=0.00, real=0.00 secs]
+2020-11-18T14:34:14.844-0800: 0.199: [GC concurrent-root-region-scan-start]
+2020-11-18T14:34:14.844-0800: 0.199: [GC concurrent-root-region-scan-end, 0.0000103 secs]
+2020-11-18T14:34:14.844-0800: 0.199: [GC concurrent-mark-start]
+2020-11-18T14:34:14.844-0800: 0.199: [Full GC (Allocation Failure)  1564K->652K(2048K), 0.0026474 secs]
+   [Eden: 0.0B(1024.0K)->0.0B(1024.0K) Survivors: 0.0B->0.0B Heap: 1564.2K(2048.0K)->652.5K(2048.0K)], [Metaspace: 4192K->4192K(36864K)]
+ [Times: user=0.00 sys=0.00, real=0.00 secs]
+2020-11-18T14:34:14.847-0800: 0.202: [GC concurrent-mark-abort]
+
+--- 堆内存耗尽
+2020-11-18T14:34:14.768-0800: 0.124: [GC pause (G1 Evacuation Pause) (young) (to-space exhausted), 0.0047944 secs]
+// 空间耗尽，当您的堆上没有足够的可用空间来提升已存活或已提升的对象（或两者）并且堆无法进一步扩展时，就会发生这种情况。
+   [Parallel Time: 3.7 ms, GC Workers: 10]
+      [GC Worker Start (ms): Min: 123.8, Avg: 123.9, Max: 123.9, Diff: 0.1]
+      [Ext Root Scanning (ms): Min: 0.0, Avg: 0.4, Max: 3.4, Diff: 3.4, Sum: 4.3]
+      [Update RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+         [Processed Buffers: Min: 0, Avg: 0.0, Max: 0, Diff: 0, Sum: 0]
+      [Scan RS (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Code Root Scanning (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.0]
+      [Object Copy (ms): Min: 0.0, Avg: 1.2, Max: 1.8, Diff: 1.8, Sum: 12.4]
+      [Termination (ms): Min: 0.0, Avg: 1.8, Max: 2.7, Diff: 2.7, Sum: 18.0]
+         [Termination Attempts: Min: 1, Avg: 1.0, Max: 1, Diff: 0, Sum: 10]
+      [GC Worker Other (ms): Min: 0.0, Avg: 0.0, Max: 0.0, Diff: 0.0, Sum: 0.1]
+      [GC Worker Total (ms): Min: 3.3, Avg: 3.5, Max: 3.6, Diff: 0.3, Sum: 34.9]
+      [GC Worker End (ms): Min: 127.2, Avg: 127.3, Max: 127.4, Diff: 0.2]
+   [Code Root Fixup: 0.0 ms]
+   [Code Root Purge: 0.0 ms]
+   [Clear CT: 0.2 ms]
+   [Other: 0.9 ms]
+      [Evacuation Failure: 0.5 ms]
+      [Choose CSet: 0.0 ms]
+      [Ref Proc: 0.2 ms]
+      [Ref Enq: 0.0 ms]
+      [Redirty Cards: 0.1 ms]
+      [Humongous Register: 0.0 ms]
+      [Humongous Reclaim: 0.0 ms]
+      [Free CSet: 0.0 ms]
+   [Eden: 1024.0K(1024.0K)->0.0B(1024.0K) Survivors: 1024.0K->0.0B Heap: 1625.7K(2048.0K)->1625.7K(2048.0K)]
+ [Times: user=0.02 sys=0.01, real=0.01 secs]

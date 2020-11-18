@@ -47,6 +47,7 @@ public class LogTest {
     /**
      * 测试G1垃圾收集器
      * -Xms2M -Xmx2M -XX:NativeMemoryTracking=summary -XX:CompressedClassSpaceSize=28m -XshowSettings:vm -Xss512K -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/Users/pengyue.du/Code/Meijia/Work01/learn_test/java/jvm/jvm_metrics_test_01/file/test_file/gc_log/oom-heap-g1.bin -XX:+PrintGCDateStamps -XX:+PrintGCDetails -Xloggc:/Users/pengyue.du/Code/Meijia/Work01/learn_test/java/jvm/jvm_metrics_test_01/file/test_file/gc_log/gc_g1.log
+     * -XX:+PrintGCApplicationStoppedTime -XX:+PrintGCApplicationConcurrentTime
      */
     @Test
     public void testG1Log() {
@@ -74,5 +75,6 @@ public class LogTest {
         }
         return stringBuffer;
     }
+
 
 }
