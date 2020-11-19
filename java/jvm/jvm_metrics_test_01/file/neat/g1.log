@@ -124,6 +124,7 @@ CommandLine flags: -XX:CompressedClassSpaceSize=29360128 -XX:+HeapDumpOnOutOfMem
 
 
 2020-11-13T11:01:07.129+0000: 2.418: [GC pause (Metadata GC Threshold) (young) (initial-mark), 0.0122343 secs]
+// 元空间不足触发的GC
    [Parallel Time: 6.4 ms, GC Workers: 4]
       [GC Worker Start (ms): Min: 2418.4, Avg: 2418.4, Max: 2418.5, Diff: 0.1]
       [Ext Root Scanning (ms): Min: 0.9, Avg: 1.0, Max: 1.0, Diff: 0.2, Sum: 3.9]
@@ -163,9 +164,8 @@ CommandLine flags: -XX:CompressedClassSpaceSize=29360128 -XX:+HeapDumpOnOutOfMem
 2020-11-18T14:34:14.773-0800: 0.129: [Full GC (Allocation Failure)  1625K->493K(2048K), 0.0019487 secs]
    [Eden: 0.0B(1024.0K)->0.0B(1024.0K) Survivors: 0.0B->0.0B Heap: 1625.7K(2048.0K)->493.5K(2048.0K)], [Metaspace: 2852K->2852K(36864K)]
  [Times: user=0.00 sys=0.00, real=0.00 secs]
-
-
-
+ // 带时区的时间 : jvm启动相对时间 : FullGC原因 收集前后堆内存变化(总堆内存大小), 耗时]
+ // [Eden区: 收集前后变化 Survivors: 收集前后变化 总堆内存前后变化], [元空间前后变化]
 
 
 

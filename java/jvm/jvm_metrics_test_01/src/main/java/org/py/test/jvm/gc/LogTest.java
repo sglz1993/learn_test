@@ -76,5 +76,14 @@ public class LogTest {
         return stringBuffer;
     }
 
+    /**
+     *  -XX:+UseSerialGC -XX:+PrintGCDetails
+     */
+    @Test
+    public void  useUseSerialGC() {
+        System.gc();
+
+    }
+
 
 }
