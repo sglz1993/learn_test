@@ -50,6 +50,16 @@ public class LogTest {
      * -XX:+PrintGCApplicationStoppedTime -XX:+PrintGCApplicationConcurrentTime
      */
     @Test
+    public void testG1Log2() {
+        while (true) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    @Test
     public void testG1Log() {
         outOfMemoryError();
     }
