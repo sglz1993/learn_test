@@ -7,19 +7,17 @@ import org.springframework.stereotype.Component;
 
 /**
  * Hello world!
+ *
+ * -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:-UseGCOverheadLimit -XX:+CMSScavengeBeforeRemark -XX:+UseCMSInitiatingOccupancyOnly -XX:NativeMemoryTracking=summary
  */
 @Component
 @SpringBootApplication
-public class App {
+public class MetricsSpringCmsTest {
 
     @Value("${spring.application.name}")
     private String application;
 
     public static void main(String[] args) {
-        SpringApplication.run(App.class, args);
+        SpringApplication.run(MetricsSpringCmsTest.class, args);
     }
-//    @Bean
-//    MeterRegistryCustomizer<MeterRegistry> configurer() {
-//        return (registry) -> registry.config().commonTags("application", application);
-//    }
 }

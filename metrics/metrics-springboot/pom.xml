@@ -14,6 +14,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>metrics-springboot-test-01</module>
+        <module>metrics-springboot-test-02</module>
     </modules>
 
     <dependencies>
