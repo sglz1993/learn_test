@@ -15,6 +15,7 @@
     <modules>
         <module>metrics-springboot-test-01</module>
         <module>metrics-springboot-test-02</module>
+        <module>metrics-springboot-jvm-serial-test-01</module>
     </modules>
 
     <dependencies>
