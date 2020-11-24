@@ -19,7 +19,7 @@ public class PathUtil {
         if(file.isDirectory()) {
             if(file.getName().equals(direct)) {
                 String targetPath = file.getAbsolutePath().substring(removePath.length() + 1);
-                System.out.println(String.format("git rm --cached -r %s;", targetPath));
+                System.out.println(String.format("git rm --cached -r %s;\\", targetPath));
             }
             File[] files = file.listFiles();
             for(File subFile : files) {
