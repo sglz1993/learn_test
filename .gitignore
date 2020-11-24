@@ -1,0 +1,6 @@
+.idea/
+/target/
+target/
+logs/
+log/
+/springboot/mybatisplus/mybatisplus-lean-test01/target/

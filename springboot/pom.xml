@@ -17,6 +17,7 @@
     <module>mybatis</module>
       <module>proguard</module>
       <module>spring-test</module>
+      <module>mybatisplus</module>
   </modules>
 
   <name>springboot</name>

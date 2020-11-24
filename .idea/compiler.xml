@@ -13,6 +13,7 @@
         <module name="mybatis-plugin-test-02" />
         <module name="p6spy-test-02" />
         <module name="p6spy-test-connect-5-04" />
+        <module name="mybatisplus-lean-test01" />
         <module name="mybatis-generator" />
         <module name="common" />
         <module name="sentinel-java-test-01" />
