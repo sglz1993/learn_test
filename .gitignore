@@ -3,4 +3,12 @@
 target/
 logs/
 log/
-/springboot/mybatisplus/mybatisplus-lean-test01/target/
+#/springboot/mybatisplus/mybatisplus-lean-test01/target/
+/apollo/apollo-java-client/target/
+/apollo/apollo-my/spring-apollo/springboot-apollo-test-01/target/
+/java/jdk11/jvm-jdk11/jvm-jdk11-gc-test01/target/
+/java/jvm/jvm_metrics_test_01/target/
+/java/logger/logback-hello-01/target/
+/java/logger/logger-springboot-apollo-04/target/
+/java/logger/logger-springboot-springprofile-03/target/
+/metrics/metrics-springboot/metrics-springboot-jvm-serial-test-01/target/
