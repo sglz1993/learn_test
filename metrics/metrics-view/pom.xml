@@ -11,5 +11,14 @@
 
     <artifactId>metrics-view</artifactId>
 
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/io.micrometer/micrometer-core -->
+<!--        <dependency>-->
+<!--            <groupId>io.micrometer</groupId>-->
+<!--            <artifactId>micrometer-core</artifactId>-->
+<!--            <version>1.0.0</version>-->
+<!--        </dependency>-->
+
+    </dependencies>
 
 </project>

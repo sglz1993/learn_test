@@ -15,6 +15,7 @@
     <modules>
         <module>apollo-source</module>
         <module>apollo-my</module>
+        <module>apollo-java-client</module>
     </modules>
 
     <dependencies>

@@ -1,9 +1,6 @@
-package org.py.test.mybatis.config;
+package org.py.metrics.springboot.jvm.serial.test.config;
 
 import io.prometheus.client.CollectorRegistry;
-import io.prometheus.client.exporter.MetricsServlet;
-import io.prometheus.client.hotspot.DefaultExports;
-import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,11 +12,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class Prometheus_Config {
 
-//    @Bean
-    public ServletRegistrationBean servletRegistrationBean(){
-        DefaultExports.initialize();
-        return new ServletRegistrationBean(new MetricsServlet(), "/metrics");
-    }
 
     @Bean
     public CollectorRegistry collectorRegistry() {

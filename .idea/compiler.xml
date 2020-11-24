@@ -17,8 +17,12 @@
         <module name="common" />
         <module name="sentinel-java-test-01" />
         <module name="proguard-example-02" />
+        <module name="metrics-view" />
         <module name="logger-java-springprofile-02" />
         <module name="sentinel-springboot-example-01" />
+        <module name="java-apollo" />
+        <module name="springboot-apollo-test-01" />
+        <module name="apollo-java-client" />
         <module name="logger-springboot-springprofile-03" />
         <module name="jvm_metrics_test_01" />
         <module name="logback-plugin-01" />
@@ -36,13 +40,10 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="apollo-mega" target="1.8" />
-      <module name="java-apollo" target="1.8" />
       <module name="mybatis-plugin-test-01" target="1.8" />
       <module name="openjdk-11" target="1.8" />
       <module name="p6spy-test-01" target="1.8" />
       <module name="proguard-example-01" target="1.8" />
-      <module name="spring-apollo" target="1.8" />
-      <module name="springboot-apollo-test-01" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

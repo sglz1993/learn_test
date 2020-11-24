@@ -17,9 +17,9 @@
 
   <dependencies>
     <dependency>
-      <groupId>co.my.tetris</groupId>
+      <groupId>org.py.test</groupId>
       <artifactId>apollo-java-client</artifactId>
-      <version>1.0.2-SNAPSHOT</version>
+      <version>1.0</version>
     </dependency>
   </dependencies>
 
