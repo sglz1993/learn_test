@@ -1,9 +1,5 @@
 package org.py.apollo.registrar;
 
-import co.mega.tetris.apollo.annotation.EnableMegaApolloConfig;
-import co.mega.tetris.apollo.config.SpringConfig;
-import co.mega.tetris.apollo.config.SpringConfigMonitor;
-import co.mega.tetris.apollo.log.LoggerConfiguration;
 import com.ctrip.framework.apollo.spring.annotation.ApolloAnnotationProcessor;
 import com.ctrip.framework.apollo.spring.annotation.ApolloJsonValueProcessor;
 import com.ctrip.framework.apollo.spring.annotation.SpringValueProcessor;
@@ -11,6 +7,10 @@ import com.ctrip.framework.apollo.spring.config.PropertySourcesProcessor;
 import com.ctrip.framework.apollo.spring.property.SpringValueDefinitionProcessor;
 import com.ctrip.framework.apollo.spring.util.BeanRegistrationUtil;
 import com.google.common.collect.Lists;
+import org.py.apollo.annotation.EnablePyApolloConfig;
+import org.py.apollo.config.SpringConfig;
+import org.py.apollo.config.SpringConfigMonitor;
+import org.py.apollo.logutl.LoggerConfiguration;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
@@ -29,7 +29,7 @@ public class MegaApolloConfigRegistrar implements ImportBeanDefinitionRegistrar 
     @Override
     public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
         AnnotationAttributes attributes = AnnotationAttributes
-                .fromMap(importingClassMetadata.getAnnotationAttributes(EnableMegaApolloConfig.class.getName()));
+                .fromMap(importingClassMetadata.getAnnotationAttributes(EnablePyApolloConfig.class.getName()));
         String[] namespaces = attributes.getStringArray("value");
         int order = attributes.getNumber("order");
         PropertySourcesProcessor.addNamespaces(Lists.newArrayList(namespaces), order);

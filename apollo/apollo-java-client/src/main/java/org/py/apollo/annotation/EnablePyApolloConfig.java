@@ -33,7 +33,7 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Documented
 @Import(MegaApolloConfigRegistrar.class)
-public @interface EnableMegaApolloConfig {
+public @interface EnablePyApolloConfig {
 
     /**
      * Apollo namespaces to inject configuration into Spring Property Sources.

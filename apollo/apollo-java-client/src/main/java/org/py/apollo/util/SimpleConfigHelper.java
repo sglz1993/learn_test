@@ -1,12 +1,12 @@
 package org.py.apollo.util;
 
-import co.mega.tetris.apollo.config.Config;
-import co.mega.tetris.apollo.config.ConfigMonitor;
-import co.mega.tetris.apollo.config.SystemConfig;
-import co.mega.tetris.apollo.log.LogbackConfiguration;
 import com.ctrip.framework.apollo.core.ConfigConsts;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;
+import org.py.apollo.config.Config;
+import org.py.apollo.config.ConfigMonitor;
+import org.py.apollo.config.SystemConfig;
+import org.py.apollo.logutl.LogbackConfiguration;
 
 import java.util.List;
 
