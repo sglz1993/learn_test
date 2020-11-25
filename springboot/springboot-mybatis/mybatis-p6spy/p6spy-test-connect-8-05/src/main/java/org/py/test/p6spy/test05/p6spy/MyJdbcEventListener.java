@@ -38,7 +38,7 @@ public class MyJdbcEventListener extends SimpleJdbcEventListener {
 
     @Override
     public void onAfterAnyAddBatch(StatementInformation statementInformation, long timeElapsedNanos, SQLException e) {
-        logElapsed(statementInformation, timeElapsedNanos, Category.BATCH, e);
+
     }
 
     @Override
