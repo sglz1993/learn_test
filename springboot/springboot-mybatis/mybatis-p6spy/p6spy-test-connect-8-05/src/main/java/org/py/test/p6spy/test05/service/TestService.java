@@ -1,7 +1,7 @@
 package org.py.test.p6spy.test05.service;
 
 import org.py.test.p6spy.test05.mapper.api.TestMapper;
-import org.py.test.p6spy.test05.mapper.entity.Test;
+import org.py.test.p6spy.test05.mapper.entity.TestEntry;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,14 +20,14 @@ public class TestService {
 
     @Transactional(rollbackFor = Throwable.class)
     public void transactionSuccess() {
-        testMapper.insert(new Test("success1"));
-        testMapper.insert(new Test("success2"));
+        testMapper.insert(new TestEntry("success1"));
+        testMapper.insert(new TestEntry("success2"));
     }
 
     @Transactional(rollbackFor = Throwable.class)
     public void transactionError() {
-        testMapper.insert(new Test("failure1"));
+        testMapper.insert(new TestEntry("failure1"));
         int a = 10/0;
-        testMapper.insert(new Test("failure2"));
+        testMapper.insert(new TestEntry("failure2"));
     }
 }

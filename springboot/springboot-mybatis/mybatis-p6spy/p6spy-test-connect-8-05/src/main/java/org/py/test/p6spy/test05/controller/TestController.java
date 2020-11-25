@@ -5,7 +5,7 @@ import com.google.common.collect.Lists;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.py.test.p6spy.test05.mapper.api.TestMapper;
-import org.py.test.p6spy.test05.mapper.entity.Test;
+import org.py.test.p6spy.test05.mapper.entity.TestEntry;
 import org.py.test.p6spy.test05.service.TestService;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,14 +55,14 @@ public class TestController {
         if(StringUtils.isEmpty(name)){
             name = UUID.randomUUID().toString().replace("-", "");
         }
-        return JSON.toJSONString(testMapper.insert(new Test(name)));
+        return JSON.toJSONString(testMapper.insert(new TestEntry(name)));
     }
 
     @GetMapping(value = "/bash")
     public String bash(@RequestParam(value = "id", defaultValue="1") Integer id) {
-        List<Test> testList = Lists.newArrayList();
+        List<TestEntry> testList = Lists.newArrayList();
         for(int i = 0; i < id; i++) {
-            testList.add(new Test(UUID.randomUUID().toString().replace("-", "")));
+            testList.add(new TestEntry(UUID.randomUUID().toString().replace("-", "")));
         }
         testMapper.bash(testList);
         return JSON.toJSONString("OK");

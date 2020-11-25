@@ -5,7 +5,7 @@ package org.py.test.p6spy.test05.mapper.entity;
  * @author pengyue.du
  * @date 2020-08-04 11:08:03
  */
-public class Test {
+public class TestEntry {
     /**
      */
     private Integer id;
@@ -14,11 +14,11 @@ public class Test {
      */
     private String name;
 
-    public Test(String name) {
+    public TestEntry(String name) {
         this.name = name;
     }
 
-    public Test() {
+    public TestEntry() {
     }
 
     public Integer getId() {

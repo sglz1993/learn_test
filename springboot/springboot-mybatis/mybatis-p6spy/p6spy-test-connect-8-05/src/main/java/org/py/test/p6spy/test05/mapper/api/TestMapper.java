@@ -3,8 +3,7 @@ package org.py.test.p6spy.test05.mapper.api;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.py.test.p6spy.test05.mapper.entity.Test;
-
+import org.py.test.p6spy.test05.mapper.entity.TestEntry;
 import java.util.List;
 
 
@@ -12,19 +11,19 @@ import java.util.List;
 public interface TestMapper {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(Test record);
+    int insert(TestEntry record);
 
-    int insertSelective(Test record);
+    int insertSelective(TestEntry record);
 
-    Test selectByPrimaryKey(Integer id);
+    TestEntry selectByPrimaryKey(Integer id);
 
-    Test selectTest(Integer id);
+    TestEntry selectTest(Integer id);
 
-    int updateByPrimaryKeySelective(Test record);
+    int updateByPrimaryKeySelective(TestEntry record);
 
-    int updateByPrimaryKey(Test record);
+    int updateByPrimaryKey(TestEntry record);
 
-    List<Test> call(Integer num);
+    List<TestEntry> call(Integer num);
 
-    int[] bash(@Param("testList") List<Test> testList);
+    int[] bash(@Param("testList") List<TestEntry> testList);
 }
