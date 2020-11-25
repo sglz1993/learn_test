@@ -25,5 +25,5 @@ public interface TestMapper {
 
     List<TestEntry> call(Integer num);
 
-    int[] bash(@Param("testList") List<TestEntry> testList);
+    void bash(@Param("testList") List<TestEntry> testList);
 }

@@ -3,14 +3,20 @@ package org.py.test.p6spy.test05.p6spy;
 import com.mysql.cj.jdbc.JdbcConnection;
 import com.p6spy.engine.common.ConnectionInformation;
 import com.p6spy.engine.common.Loggable;
+import com.p6spy.engine.common.PreparedStatementInformation;
+import com.p6spy.engine.common.Value;
 import com.p6spy.engine.logging.Category;
 import lombok.extern.slf4j.Slf4j;
+import org.py.common.reflect.ReflectUtils;
+import org.py.common.thread.StackUtil;
 
 import javax.sql.CommonDataSource;
 import javax.sql.PooledConnection;
 import java.sql.Driver;
 import java.sql.SQLException;
+import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Author pengyue.du
@@ -31,6 +37,7 @@ public class MyRecord {
         int connectionId = 0; // connectionId
         String sql = null; // 原始SQL
         try {
+            StackUtil.printThreadStack(5);
             ConnectionInformation connectionInformation = loggable.getConnectionInformation(); // ConnectionInformation
             String sql1 = connectionInformation.getSql(); // ""
             String url = connectionInformation.getUrl(); // url
@@ -38,6 +45,10 @@ public class MyRecord {
             CommonDataSource dataSource = connectionInformation.getDataSource(); // null
             sql = loggable.getSql();
             String name = category.getName(); //Category
+            Map<Integer, Value> parameterValues = null;
+            if (loggable instanceof PreparedStatementInformation) {
+                parameterValues = (Map<Integer, Value>) ReflectUtils.invoke(PreparedStatementInformation.class, "getParameterValues", loggable);
+            }
             String sqlWithValues = loggable.getSqlWithValues(); //替换值后的SQL
             JdbcConnection connection = (JdbcConnection) connectionInformation.getConnection(); //数据库，用户名、密码等
             Properties properties = connection.getProperties();
@@ -55,7 +66,8 @@ public class MyRecord {
             throwables.printStackTrace();
         }
 
-        log.info("category : {}, cid : {}, sql : {}", category.getName(), connectionId, sql);
+        log.info("category : {}, cid : {}, sql : {}, timeElapsedNanos: {}", category.getName(), connectionId, sql, TimeUnit.NANOSECONDS.toMillis(timeElapsedNanos));
     }
+
 
 }

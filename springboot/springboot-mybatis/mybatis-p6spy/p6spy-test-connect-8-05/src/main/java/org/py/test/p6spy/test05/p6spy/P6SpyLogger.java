@@ -2,6 +2,7 @@ package org.py.test.p6spy.test05.p6spy;
 
 import com.p6spy.engine.spy.appender.MessageFormattingStrategy;
 import lombok.extern.slf4j.Slf4j;
+import org.py.common.thread.StackUtil;
 
 import java.time.LocalDateTime;
 
@@ -37,6 +38,7 @@ public class P6SpyLogger implements MessageFormattingStrategy {
      */
     @Override
     public String formatMessage(int connectionId, String now, long elapsed, String category, String prepared, String sql, String url) {
+        StackUtil.printThreadStack(10);
         log.info("connectionId:{}, now:{}, elapsed:{}, category:{}, prepared:{}, sql:{}, url:{}", connectionId, now, elapsed, category, prepared, sql, url);
         return !"".equals(sql.trim()) ? "[ " + LocalDateTime.now() + " ] --- | took "
                 + elapsed + "ms | " + category + " | connection " + connectionId + "\n "
