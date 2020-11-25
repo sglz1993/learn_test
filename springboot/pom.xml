@@ -14,7 +14,6 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
-    <module>mybatis</module>
       <module>proguard</module>
       <module>spring-test</module>
       <module>mybatisplus</module>
