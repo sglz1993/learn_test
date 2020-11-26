@@ -9,6 +9,9 @@
         <module>p6spy-test-connect-6-03</module>
         <module>p6spy-test-connect-5-04</module>
         <module>p6spy-test-connect-8-05</module>
+        <module>p6spy-version-01</module>
+        <module>p6spy-client</module>
+        <module>p6spy-user-test01</module>
     </modules>
     <parent>
         <groupId>org.py.test</groupId>
