@@ -13,9 +13,11 @@ import java.util.Map;
  */
 public class MyP6SpyOptions extends StandardMBean implements P6LoadableOptions {
 
+    protected P6OptionsRepository optionsRepository;
 
     public MyP6SpyOptions(final P6OptionsRepository optionsRepository) {
         super(P6LoadableOptions.class, false);
+        this.optionsRepository = optionsRepository;
     }
 
 

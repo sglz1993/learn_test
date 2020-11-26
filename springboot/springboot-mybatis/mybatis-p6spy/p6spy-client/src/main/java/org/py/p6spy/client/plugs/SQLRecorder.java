@@ -6,58 +6,51 @@ import com.p6spy.engine.common.Loggable;
 import com.p6spy.engine.common.PreparedStatementInformation;
 import com.p6spy.engine.common.Value;
 import com.p6spy.engine.logging.Category;
+import lombok.extern.slf4j.Slf4j;
+import org.py.p6spy.client.entry.SQLDetail;
 import org.py.p6spy.client.util.ReflectUtils;
-import javax.sql.CommonDataSource;
-import javax.sql.PooledConnection;
-import java.sql.Driver;
+import org.py.p6spy.client.util.Util;
+
 import java.sql.SQLException;
+import java.time.Instant;
 import java.util.Map;
-import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Author pengyue.du
- * @Date 2020/9/10 5:23 下午
+ * @Date 2020/9/10 5:23 pm
  * @Description
  */
+@Slf4j
 public class SQLRecorder {
 
     /**
-     *
+     * 哪个服务，哪个库，读/写，原始SQL，执行的SQL，执行时间，哪个用户操作的，哪个pod调用，调用时间
      * @param loggable
      * @param timeElapsedNanos  耗时
      * @param category
      * @param e
      */
     public static void logElapsed(Loggable loggable, long timeElapsedNanos, Category category, SQLException e) {
-        int connectionId = 0; // connectionId
-        String sql = null; // 原始SQL
+        if(!SQLAnalyseConfig.init) {
+            log.warn("config not init , please config org.py.p6spy.client.plugs.SQLAnalyseConfig");
+            return;
+        }
         try {
-            ConnectionInformation connectionInformation = loggable.getConnectionInformation(); // ConnectionInformation
-            String sql1 = connectionInformation.getSql(); // ""
-            String url = connectionInformation.getUrl(); // url
-            connectionId = connectionInformation.getConnectionId();
-            CommonDataSource dataSource = connectionInformation.getDataSource(); // null
-            sql = loggable.getSql();
-            String name = category.getName(); //Category
+            ConnectionInformation connectionInformation = loggable.getConnectionInformation();
+            String sql = loggable.getSql();
             Map<Integer, Value> parameterValues = null;
             if (loggable instanceof PreparedStatementInformation) {
                 parameterValues = (Map<Integer, Value>) ReflectUtils.invoke(PreparedStatementInformation.class, "getParameterValues", loggable);
             }
-            String sqlWithValues = loggable.getSqlWithValues(); //替换值后的SQL
-            JdbcConnection connection = (JdbcConnection) connectionInformation.getConnection(); //数据库，用户名、密码等
-            Properties properties = connection.getProperties();
+            String sqlWithValues = loggable.getSqlWithValues();
+            JdbcConnection connection = (JdbcConnection) connectionInformation.getConnection();
             String database = connection.getDatabase();
             String user = connection.getUser();
-            long id = connection.getId();
-            Driver driver = connectionInformation.getDriver(); //非null 但是暂时未发现有效内容
-            String sqlWithValues1 = connectionInformation.getSqlWithValues(); // ""
-            PooledConnection pooledConnection = connectionInformation.getPooledConnection(); //null
-
-
-            ConnectionInformation connectionInformation1 = connectionInformation.getConnectionInformation();
-            boolean c1 = connectionInformation == connectionInformation1; //true
+            System.out.println(new SQLDetail(SQLAnalyseConfig.serviceName, database, "read", sql, parameterValues, sqlWithValues, TimeUnit.NANOSECONDS.toMillis(timeElapsedNanos),
+                    user, Util.getHostName(), Instant.now().toEpochMilli(), category.getName()));
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            log.error("parse sql error", throwables);
         }
     }
 
