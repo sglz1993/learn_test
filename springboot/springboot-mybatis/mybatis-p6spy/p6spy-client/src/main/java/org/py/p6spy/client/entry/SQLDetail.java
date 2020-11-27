@@ -16,6 +16,11 @@ import java.util.Map;
 public class SQLDetail {
 
     /**
+     * 服务来源AppId
+     */
+    private String appId;
+
+    /**
      * 来源服务名称
      */
     private String serviceName;

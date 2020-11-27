@@ -8,6 +8,7 @@ import com.p6spy.engine.common.Value;
 import com.p6spy.engine.logging.Category;
 import lombok.extern.slf4j.Slf4j;
 import org.py.p6spy.client.entry.SQLDetail;
+import org.py.p6spy.client.producer.SQLRecordProducer;
 import org.py.p6spy.client.util.ReflectUtils;
 import org.py.p6spy.client.util.Util;
 
@@ -46,7 +47,8 @@ public class SQLRecorder {
             JdbcConnection connection = (JdbcConnection) connectionInformation.getConnection();
             String database = connection.getDatabase();
             String user = connection.getUser();
-            System.out.println(new SQLDetail(SQLAnalyseConfig.serviceName, database, OperationParser.parse(sql).name(), sql, Util.codingData(parameterValues), TimeUnit.NANOSECONDS.toMillis(timeElapsedNanos),
+            SQLRecordProducer.sendSQLRecord(new SQLDetail(SQLAnalyseConfig.appId, SQLAnalyseConfig.serviceName, database,
+                    OperationParser.parse(sql).name(), sql, Util.codingData(parameterValues), TimeUnit.NANOSECONDS.toMillis(timeElapsedNanos),
                     user, Util.getHostName(), Instant.now().toEpochMilli(), category.getName()));
         } catch (SQLException throwables) {
             log.error("parse sql error", throwables);

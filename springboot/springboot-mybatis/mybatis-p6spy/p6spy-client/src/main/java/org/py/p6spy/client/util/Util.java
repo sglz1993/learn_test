@@ -1,14 +1,33 @@
 package org.py.p6spy.client.util;
 
+import com.google.gson.*;
 import com.p6spy.engine.common.Value;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Util {
+
+    private static final Gson gsonIns = new GsonBuilder()
+            .disableHtmlEscaping()
+            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+            .registerTypeAdapter(LocalDateTime.class,
+                    (JsonSerializer<LocalDateTime>) (src, typeOfSrc, context)
+                            -> new JsonPrimitive(src.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli() / 1000))
+            .registerTypeAdapter(LocalDateTime.class,
+                    (JsonDeserializer<LocalDateTime>) (jsonElement, type, jdc)
+                            -> jsonElement.getAsLong() == 0 ? null : LocalDateTime.ofInstant(Instant.ofEpochMilli(jsonElement.getAsLong() * 1000), ZoneId.systemDefault()))
+            .create();
+
+    public static Gson getGson() {
+        return gsonIns;
+    }
 
     public static String getHostName() {
         try {
