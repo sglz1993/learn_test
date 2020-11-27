@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 public class SQLRecorder {
 
     /**
-     * 哪个服务，哪个库，读/写，原始SQL，执行的SQL，执行时间，哪个用户操作的，哪个pod调用，调用时间
+     * 哪个服务，哪个库，读/写，原始SQL，执行时间，哪个用户操作的，哪个pod调用，调用时间
      * @param loggable
      * @param timeElapsedNanos  耗时
      * @param category
@@ -43,11 +43,10 @@ public class SQLRecorder {
             if (loggable instanceof PreparedStatementInformation) {
                 parameterValues = (Map<Integer, Value>) ReflectUtils.invoke(PreparedStatementInformation.class, "getParameterValues", loggable);
             }
-            String sqlWithValues = loggable.getSqlWithValues();
             JdbcConnection connection = (JdbcConnection) connectionInformation.getConnection();
             String database = connection.getDatabase();
             String user = connection.getUser();
-            System.out.println(new SQLDetail(SQLAnalyseConfig.serviceName, database, "read", sql, parameterValues, sqlWithValues, TimeUnit.NANOSECONDS.toMillis(timeElapsedNanos),
+            System.out.println(new SQLDetail(SQLAnalyseConfig.serviceName, database, OperationParser.parse(sql).name(), sql, Util.codingData(parameterValues), TimeUnit.NANOSECONDS.toMillis(timeElapsedNanos),
                     user, Util.getHostName(), Instant.now().toEpochMilli(), category.getName()));
         } catch (SQLException throwables) {
             log.error("parse sql error", throwables);

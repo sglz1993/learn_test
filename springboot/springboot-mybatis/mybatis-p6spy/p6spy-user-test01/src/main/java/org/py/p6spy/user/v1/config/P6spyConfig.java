@@ -9,7 +9,7 @@ public class P6spyConfig {
 
     @Bean
     public SQLAnalyseConfig sqlAnalyseConfig() {
-        return new SQLAnalyseConfig("user-test");
+        return new SQLAnalyseConfig("user-test", 1);
     }
 
 }

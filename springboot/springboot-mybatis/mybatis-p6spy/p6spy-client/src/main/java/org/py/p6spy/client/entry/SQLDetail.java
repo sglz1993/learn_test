@@ -1,6 +1,5 @@
 package org.py.p6spy.client.entry;
 
-import com.p6spy.engine.common.Value;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,8 +29,9 @@ public class SQLDetail {
      * 操作类型
      * read ： 读
      * write ： 写
+     * other ： 其他
      */
-    private String operateType;
+    private String operationType;
 
     /**
      * 原始SQL
@@ -41,12 +41,7 @@ public class SQLDetail {
     /**
      * 参数
      */
-    private Map<Integer, Value> param;
-
-    /**
-     * 替换参数后SQL，即执行SQL
-     */
-    private String execSQL;
+    private Map<Integer, String> param;
 
     /**
      * SQL执行时间，单位毫秒

@@ -1,6 +1,6 @@
 package old.tool.tool;
 
-import old.tool.common.FileUtil;
+import org.py.tool.file.FileUtil;
 import org.junit.Test;
 
 import java.io.File;
