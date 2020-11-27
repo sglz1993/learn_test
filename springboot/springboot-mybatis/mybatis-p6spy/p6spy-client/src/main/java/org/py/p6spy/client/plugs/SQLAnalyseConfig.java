@@ -1,6 +1,7 @@
 package org.py.p6spy.client.plugs;
 
 import org.apache.commons.lang3.StringUtils;
+import org.py.p6spy.client.config.Constant;
 
 /**
  * current config
@@ -20,6 +21,10 @@ public class SQLAnalyseConfig {
      ******************************************************/
 
     static String bootstrapServers = "";
+
+    static int partitions = Constant.DEFAULT_PARTITIONS;
+
+    static int replics = Constant.DEFAULT_REPLICATION_FACTOR;
 
 
     public SQLAnalyseConfig() {
@@ -62,6 +67,30 @@ public class SQLAnalyseConfig {
             SQLAnalyseConfig.bootstrapServers = bootstrapServers;
         }else {
             throw new IllegalArgumentException("sql recorder bootstrapServers is empty");
+        }
+    }
+
+    public static int getPartitions() {
+        return partitions;
+    }
+
+    public static void setPartitions(int partitions) {
+        if(partitions > 0) {
+            SQLAnalyseConfig.partitions = partitions;
+        }else {
+            throw new IllegalArgumentException("partitions must is positive integer");
+        }
+    }
+
+    public static int getReplics() {
+        return replics;
+    }
+
+    public static void setReplics(int replics) {
+        if(replics > 0) {
+            SQLAnalyseConfig.replics = replics;
+        }else {
+            throw new IllegalArgumentException("replics must is positive integer");
         }
     }
 

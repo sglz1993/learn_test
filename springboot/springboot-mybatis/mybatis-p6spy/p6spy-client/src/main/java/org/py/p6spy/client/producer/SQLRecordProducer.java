@@ -1,6 +1,8 @@
 package org.py.p6spy.client.producer;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.Validate;
+import org.apache.kafka.clients.admin.*;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.ByteArraySerializer;
@@ -8,7 +10,11 @@ import org.py.p6spy.client.config.Constant;
 import org.py.p6spy.client.entry.SQLDetail;
 import org.py.p6spy.client.plugs.SQLAnalyseConfig;
 import org.py.p6spy.client.util.Util;
+
 import java.nio.charset.StandardCharsets;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.*;
 
@@ -23,7 +29,7 @@ public class SQLRecordProducer {
 
     private volatile static KafkaProducer<byte[], byte[]> kafkaProducer;
 
-    private final static String topic = "infrastructure_sql_record_p6spy_topic";
+    private final static String topic = Constant.DEFAULT_TOPIC;
 
     public static void sendSQLRecord(SQLDetail sqlDetail) {
         getSQLRecordSendThreadPoll().submit(() -> {
@@ -49,6 +55,7 @@ public class SQLRecordProducer {
         if(kafkaProducer == null) {
             synchronized (SQLRecordProducer.class) {
                 if(kafkaProducer == null) {
+                    createTopicIfNotPresent(SQLAnalyseConfig.getBootstrapServers(), topic, SQLAnalyseConfig.getPartitions(), SQLAnalyseConfig.getReplics());
                     kafkaProducer = new KafkaProducer<>(getProducerConfig());
                     Runtime.getRuntime().addShutdownHook(new Thread("SQLRecordProducer-Close") {
                         @Override
@@ -65,7 +72,7 @@ public class SQLRecordProducer {
     private static Properties getProducerConfig() {
         Properties properties = new Properties();
         properties.put("bootstrap.servers", SQLAnalyseConfig.getBootstrapServers());
-        properties.put("request.required.acks", "1");
+        properties.put("acks", "1");
         properties.put("retries", 3);
         properties.put("batch.size", 16384);
         properties.put("linger.ms", 1);
@@ -74,6 +81,45 @@ public class SQLRecordProducer {
         properties.put("key.serializer", ByteArraySerializer.class.getName());
         properties.put("value.serializer", ByteArraySerializer.class.getName());
         return properties;
+    }
+
+
+    private static void createTopicIfNotPresent(String bootstrapServers, String topic, int partitions, int replics) {
+        Validate.notEmpty(bootstrapServers, "Kafka bootstrap server can not be null.");
+        Validate.notEmpty(topic, "Kafka topic can not be null.");
+        Properties props = new Properties();
+        props.put("bootstrap.servers", bootstrapServers);
+        AdminClient adminClient = AdminClient.create(props);
+        if (!checkTopicExist(topic, adminClient)) {
+            createTopic(adminClient, topic, partitions, replics);
+        }
+    }
+
+    private static void createTopic(AdminClient adminClient, String topicName, int partitions, int replicationFactor) {
+        NewTopic topic = new NewTopic(topicName, partitions, (short) replicationFactor);
+        Collection<NewTopic> topics = Collections.singletonList(topic);
+        CreateTopicsResult result = adminClient.createTopics(topics);
+        try {
+            result.all().get();
+        } catch (InterruptedException e) {
+            log.error(e.getMessage(), e);
+        } catch (ExecutionException e) {
+            log.error(e.getMessage(), e);
+        }
+    }
+
+    public static boolean checkTopicExist(String topicName, AdminClient adminClient) {
+        Collection<String> topics = Collections.singletonList(topicName);
+        DescribeTopicsResult result = adminClient.describeTopics(topics);
+        try {
+            Map<String, TopicDescription> topicDescriptionMap = result.all().get(1000, TimeUnit.MILLISECONDS);
+            if (topicDescriptionMap.containsKey(topicName)) {
+                return true;
+            }
+        } catch (Exception e) {
+            log.warn("check topic error", e);
+        }
+        return false;
     }
 
     private static String getClientId() {

@@ -9,7 +9,8 @@ public class P6spyConfig {
 
     @Bean
     public SQLAnalyseConfig sqlAnalyseConfig() {
-        return new SQLAnalyseConfig("123", "user-test", 1, "SQLRecordTopic", "127.0.0.1:9092");
+        SQLAnalyseConfig.setReplics(1);
+        return new SQLAnalyseConfig("123", "user-test", 1, "127.0.0.1:9092");
     }
 
 }
