@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.ByteArraySerializer;
+import org.py.p6spy.client.config.Constant;
 import org.py.p6spy.client.entry.SQLDetail;
 import org.py.p6spy.client.plugs.SQLAnalyseConfig;
 import org.py.p6spy.client.util.Util;
@@ -35,7 +36,7 @@ public class SQLRecordProducer {
             synchronized (SQLRecordProducer.class) {
                 if(executorService == null) {
                     executorService = new ThreadPoolExecutor(2, 2, 5L, TimeUnit.SECONDS,
-                            new LinkedBlockingQueue<>(10000), Executors.defaultThreadFactory(), (r, executor) -> {
+                            new LinkedBlockingQueue<>(Constant.DEFAULT_QUEUE_SIZE), Executors.defaultThreadFactory(), (r, executor) -> {
                             log.warn("SQLRecordSendThreadPoll already full");
                     });
                 }
