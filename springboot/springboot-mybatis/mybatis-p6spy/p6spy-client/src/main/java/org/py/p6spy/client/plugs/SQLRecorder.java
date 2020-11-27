@@ -9,6 +9,7 @@ import com.p6spy.engine.logging.Category;
 import lombok.extern.slf4j.Slf4j;
 import org.py.p6spy.client.entry.SQLDetail;
 import org.py.p6spy.client.producer.SQLRecordProducer;
+import org.py.p6spy.client.sample.DefaultSamplingStrategy;
 import org.py.p6spy.client.util.ReflectUtils;
 import org.py.p6spy.client.util.Util;
 
@@ -24,6 +25,8 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 public class SQLRecorder {
+
+    private static final DefaultSamplingStrategy SAMPLING_STRATEGY = new DefaultSamplingStrategy();
 
     /**
      * 哪个服务，哪个库，读/写，原始SQL，执行时间，哪个用户操作的，哪个pod调用，调用时间
@@ -47,9 +50,12 @@ public class SQLRecorder {
             JdbcConnection connection = (JdbcConnection) connectionInformation.getConnection();
             String database = connection.getDatabase();
             String user = connection.getUser();
-            SQLRecordProducer.sendSQLRecord(new SQLDetail(SQLAnalyseConfig.appId, SQLAnalyseConfig.serviceName, database,
+            SQLDetail sqlDetail = new SQLDetail(SQLAnalyseConfig.appId, SQLAnalyseConfig.serviceName, database,
                     OperationParser.parse(sql).name(), sql, Util.codingData(parameterValues), TimeUnit.NANOSECONDS.toMillis(timeElapsedNanos),
-                    user, Util.getHostName(), Instant.now().toEpochMilli(), category.getName()));
+                    user, Util.getHostName(), Instant.now().toEpochMilli(), category.getName());
+            if (SAMPLING_STRATEGY.checkSimple(sqlDetail)) {
+                SQLRecordProducer.sendSQLRecord(sqlDetail);
+            }
         } catch (SQLException throwables) {
             log.error("parse sql error", throwables);
         }

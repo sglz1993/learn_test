@@ -42,9 +42,7 @@ public class SQLRecordProducer {
             synchronized (SQLRecordProducer.class) {
                 if(executorService == null) {
                     executorService = new ThreadPoolExecutor(2, 2, 5L, TimeUnit.SECONDS,
-                            new LinkedBlockingQueue<>(Constant.DEFAULT_QUEUE_SIZE), Executors.defaultThreadFactory(), (r, executor) -> {
-                            log.warn("SQLRecordSendThreadPoll already full");
-                    });
+                            new LinkedBlockingQueue<>(Constant.DEFAULT_QUEUE_SIZE), Executors.defaultThreadFactory(), (r, executor) -> log.warn("SQLRecordSendThreadPoll already full"));
                 }
             }
         }
@@ -101,9 +99,7 @@ public class SQLRecordProducer {
         CreateTopicsResult result = adminClient.createTopics(topics);
         try {
             result.all().get();
-        } catch (InterruptedException e) {
-            log.error(e.getMessage(), e);
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             log.error(e.getMessage(), e);
         }
     }
