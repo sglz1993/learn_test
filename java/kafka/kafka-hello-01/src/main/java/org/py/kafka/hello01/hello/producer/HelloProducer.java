@@ -32,7 +32,7 @@ public class HelloProducer {
         for (int i = 10; i < 12; i++) {
             String data = "async :" + i;
             // 发送消息
-            producer.send(new ProducerRecord<>("demo-topic", data));
+            producer.send(new ProducerRecord<>("demo-topic2", data));
         }
 
         // 1 同步发送消息 调用get()阻塞返回结果

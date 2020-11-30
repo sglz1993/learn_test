@@ -35,7 +35,7 @@ public class HelloConsumer {
 
         // 2. 创建消费者实例并订阅topic
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(properties);
-        String[] topics = new String[]{"demo-topic"};
+        String[] topics = new String[]{"demo-topic1","demo-topic2"};
         consumer.subscribe(Arrays.asList(topics));
 
         // 3. 消费消息

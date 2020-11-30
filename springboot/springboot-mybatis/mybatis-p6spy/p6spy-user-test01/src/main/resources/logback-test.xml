@@ -11,7 +11,7 @@
         </encoder>
     </appender>
 
-    <logger name="org.py.test.p6spy" level="debug"/>
+    <logger name="org.py" level="debug"/>
 
     <!--    <root level="${log.root.level:-error}">-->
     <root level="${log.root.level:-info}">

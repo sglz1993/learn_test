@@ -1,7 +1,10 @@
 package org.py.p6spy.client.plugs;
 
+import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.py.p6spy.client.config.Constant;
+
+import java.util.List;
 
 /**
  * current config
@@ -27,15 +30,22 @@ public class SQLAnalyseConfig {
     static int replics = Constant.DEFAULT_REPLICATION_FACTOR;
 
 
+    /******************************************************
+     * 一下配置 变更需要重新启动
+     ******************************************************/
+
+    static List<String> initSQL = Lists.newArrayList();
+
     public SQLAnalyseConfig() {
     }
 
-    public SQLAnalyseConfig(String appId, String serviceName, int samplingFrequency, String bootstrapServers) {
+    public SQLAnalyseConfig(String appId, String serviceName, int samplingFrequency, String bootstrapServers, List<String> initSQL) {
         init = true;
         setAppId(appId);
         setServiceName(serviceName);
         setSamplingFrequency(samplingFrequency);
         setBootstrapServers(bootstrapServers);
+        setInitSQL(initSQL);
     }
 
     public static void setAppId(String appId) {
@@ -92,6 +102,17 @@ public class SQLAnalyseConfig {
         }else {
             throw new IllegalArgumentException("replics must is positive integer");
         }
+    }
+
+    public static List<String> getInitSQL() {
+        return initSQL;
+    }
+
+    public static void setInitSQL(List<String> initSQL) {
+        if(initSQL == null) {
+            return;
+        }
+        SQLAnalyseConfig.initSQL = initSQL;
     }
 
     public static String getAppId() {

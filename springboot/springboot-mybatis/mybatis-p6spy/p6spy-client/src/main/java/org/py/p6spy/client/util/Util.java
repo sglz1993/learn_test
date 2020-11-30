@@ -8,9 +8,7 @@ import java.net.UnknownHostException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Util {
 
@@ -61,6 +59,22 @@ public class Util {
             }
         }
         return result;
+    }
+
+    public static <K, V> Map<K, V> asMap(Object... kvPairs) {
+        if (null == kvPairs) {
+            return Collections.emptyMap();
+        }
+
+        if (0 != kvPairs.length % 2) {
+            throw new RuntimeException("unmatched KV number: " + Arrays.toString(kvPairs));
+        }
+
+        Map<K, V> map = new HashMap<>();
+        for (int i = 0; i < kvPairs.length / 2; i++) {
+            map.put((K) kvPairs[2 * i], (V) kvPairs[2 * i + 1]);
+        }
+        return map;
     }
 
 }

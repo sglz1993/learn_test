@@ -33,6 +33,7 @@ public class SQLRecordProducer {
 
     public static void sendSQLRecord(SQLDetail sqlDetail) {
         getSQLRecordSendThreadPoll().submit(() -> {
+            log.debug("send sql record:{}", Util.getGson().toJson(sqlDetail));
             getProducer().send(new ProducerRecord<>(topic, Util.getGson().toJson(sqlDetail).getBytes(StandardCharsets.UTF_8)));
         });
     }
@@ -95,6 +96,7 @@ public class SQLRecordProducer {
 
     private static void createTopic(AdminClient adminClient, String topicName, int partitions, int replicationFactor) {
         NewTopic topic = new NewTopic(topicName, partitions, (short) replicationFactor);
+        topic.configs(Util.asMap("retention.bytes", String.valueOf(10000 * 2000), "retention.ms", String.valueOf(2 * 24 * 60 * 60 * 1000)));
         Collection<NewTopic> topics = Collections.singletonList(topic);
         CreateTopicsResult result = adminClient.createTopics(topics);
         try {
