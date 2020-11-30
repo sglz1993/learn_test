@@ -16,6 +16,7 @@ import org.py.p6spy.client.util.Util;
 
 import java.sql.SQLException;
 import java.time.Instant;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -28,6 +29,8 @@ import java.util.concurrent.TimeUnit;
 public class SQLRecorder {
 
     private static final DefaultSamplingStrategy SAMPLING_STRATEGY = new DefaultSamplingStrategy();
+
+    private static List<String> initSQL;
 
     /**
      * 哪个服务，哪个库，读/写，原始SQL，执行时间，哪个用户操作的，哪个pod调用，调用时间
@@ -46,7 +49,7 @@ public class SQLRecorder {
             String sql = loggable.getSql();
             if(StringUtils.isNotBlank(sql)) {
                 sql = sql.trim();
-                if (!SQLAnalyseConfig.initSQL.contains(sql)) {
+                if (!getInitSQL().contains(sql)) {
                     Map<Integer, Value> parameterValues = null;
                     if (loggable instanceof PreparedStatementInformation) {
                         parameterValues = (Map<Integer, Value>) ReflectUtils.invoke(PreparedStatementInformation.class, "getParameterValues", loggable);
@@ -71,6 +74,13 @@ public class SQLRecorder {
         } catch (SQLException throwables) {
             log.error("parse sql error", throwables);
         }
+    }
+
+    private static List<String> getInitSQL() {
+        if(initSQL == null) {
+            initSQL = SQLAnalyseConfig.initSQL;
+        }
+        return initSQL;
     }
 
 
