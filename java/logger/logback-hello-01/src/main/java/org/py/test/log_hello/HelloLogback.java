@@ -1,4 +1,4 @@
-package org.py.test.log;
+package org.py.test.log_hello;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

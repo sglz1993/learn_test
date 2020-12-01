@@ -1,4 +1,4 @@
-package org.py.test.log.test;
+package org.py.test.log_hello.test;
 
 import org.junit.Test;
 
