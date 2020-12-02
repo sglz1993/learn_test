@@ -17,6 +17,7 @@
     <module>metrics</module>
     <module>sentinel</module>
       <module>apollo</module>
+      <module>scala</module>
   </modules>
 
   <name>learn_test</name>
