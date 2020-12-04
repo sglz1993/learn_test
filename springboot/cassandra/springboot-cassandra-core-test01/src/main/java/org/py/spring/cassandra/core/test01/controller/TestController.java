@@ -25,8 +25,10 @@ public class TestController {
     private CassandraOption cassandraOption;
 
     @RequestMapping("insert")
-    public String insert(@RequestParam(required = false, defaultValue = "false") Boolean fix) {
-        Teacher teacher = new Teacher(1, "sf", "sdf", 1, 1);
+    public String insert(@RequestParam(required = false, defaultValue = "false") Boolean fix,
+                         @RequestParam(required = false, defaultValue = "1") Integer age,
+                         @RequestParam(required = false, defaultValue = "name") String name) {
+        Teacher teacher = new Teacher(1, "sf", name, age, 1);
         if(!fix) {
             teacher = new Teacher((int) (System.currentTimeMillis()%100), UUID.randomUUID().toString(), "lal", 1, 1);
         }
