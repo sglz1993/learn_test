@@ -7,7 +7,7 @@
     <artifactId>jvm-jdk11</artifactId>
     <groupId>org.py.test</groupId>
     <version>1.0-SNAPSHOT</version>
-    <relativePath/>
+
   </parent>
   <groupId>org.py.test</groupId>
   <artifactId>jvm-jdk11-gc-test01</artifactId>

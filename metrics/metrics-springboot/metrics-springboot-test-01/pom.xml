@@ -7,7 +7,7 @@
         <artifactId>metrics-springboot</artifactId>
         <groupId>org.py.test</groupId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath/>
+
     </parent>
     <groupId>org.py.test</groupId>
     <artifactId>metrics-springboot-test-01</artifactId>

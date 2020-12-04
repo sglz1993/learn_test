@@ -7,7 +7,6 @@
     <groupId>org.py.test</groupId>
     <artifactId>learn_test</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <relativePath/>
   </parent>
   <groupId>org.py.test</groupId>
   <artifactId>springboot</artifactId>
@@ -18,6 +17,7 @@
       <module>spring-test</module>
       <module>mybatisplus</module>
       <module>springboot-mybatis</module>
+      <module>cassandra</module>
   </modules>
 
   <name>springboot</name>
