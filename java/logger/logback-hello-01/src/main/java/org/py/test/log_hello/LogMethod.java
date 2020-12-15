@@ -1,7 +1,11 @@
 package org.py.test.log_hello;
 
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * method 好像无法变更
@@ -17,6 +21,12 @@ public class LogMethod {
         logger.info("Hello World");
     }
 
+    @Test
+    public void test1() {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMddHH");
+        LocalDateTime lastHour = LocalDateTime.now().minusHours(1);
+        System.out.println(lastHour.format(dateTimeFormatter));
+    }
 
 
 
