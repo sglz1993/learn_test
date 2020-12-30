@@ -51,4 +51,14 @@ public class CollectionTest {
         }
     }
 
+    /**
+     * -Xmx1G -Xms1G -XX:+UseG1GC -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+UnlockExperimentalVMOptions -XX:G1MaxNewSizePercent=35 -XX:InitiatingHeapOccupancyPercent=40
+     */
+    @Test
+    public void testG1_test2() {
+        while (true) {
+            Integer[] intArray = new Integer[1024];
+        }
+    }
+
 }
