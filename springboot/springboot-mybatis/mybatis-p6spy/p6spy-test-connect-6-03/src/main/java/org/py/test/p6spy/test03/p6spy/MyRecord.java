@@ -1,6 +1,8 @@
 package org.py.test.p6spy.test03.p6spy;
 
 import com.mysql.cj.api.jdbc.JdbcConnection;
+import com.mysql.cj.core.conf.url.ConnectionUrlParser;
+import com.mysql.cj.jdbc.DatabaseMetaData;
 import com.p6spy.engine.common.ConnectionInformation;
 import com.p6spy.engine.common.Loggable;
 import com.p6spy.engine.logging.Category;
@@ -38,6 +40,18 @@ public class MyRecord {
         String sqlWithValues = loggable.getSqlWithValues(); //替换值后的SQL
         JdbcConnection connection = (JdbcConnection) connectionInformation.getConnection(); //数据库，用户名、密码等
         Properties properties = connection.getProperties();
+        DatabaseMetaData metaData = null;
+        try {
+            String url1 = connection.getURL();
+            String path = ConnectionUrlParser.parseConnectionString(connection.getURL()).getPath();
+            metaData = (DatabaseMetaData) connection.getMetaData();
+            String databaseProductName = metaData.getUserName();
+            String driverName = metaData.getDriverName();
+            String userName = metaData.getUserName();
+            String user = connection.getUser();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         Driver driver = connectionInformation.getDriver(); //非null 但是暂时未发现有效内容
         String sqlWithValues1 = connectionInformation.getSqlWithValues(); // ""
         PooledConnection pooledConnection = connectionInformation.getPooledConnection(); //null

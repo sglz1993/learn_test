@@ -1,5 +1,6 @@
 package org.py.p6spy.client.plugs;
 
+import com.mysql.cj.conf.ConnectionUrlParser;
 import com.mysql.cj.jdbc.JdbcConnection;
 import com.p6spy.engine.common.ConnectionInformation;
 import com.p6spy.engine.common.Loggable;
@@ -44,35 +45,32 @@ public class SQLRecorder {
             log.warn("config not init , please config {}", SQLRecorder.class.getName());
             return;
         }
-        try {
-            ConnectionInformation connectionInformation = loggable.getConnectionInformation();
-            String sql = loggable.getSql();
-            if(StringUtils.isNotBlank(sql)) {
-                sql = sql.trim();
-                if (!getInitSQL().contains(sql)) {
-                    Map<Integer, Value> parameterValues = null;
-                    if (loggable instanceof PreparedStatementInformation) {
-                        parameterValues = (Map<Integer, Value>) ReflectUtils.invoke(PreparedStatementInformation.class, "getParameterValues", loggable);
-                    }
-                    JdbcConnection connection = (JdbcConnection) connectionInformation.getConnection();
-                    String database = connection.getDatabase();
-                    String user = connection.getUser();
-                    SQLDetail sqlDetail = new SQLDetail(SQLAnalyseConfig.appId, SQLAnalyseConfig.serviceName, database,
-                            OperationParser.parse(sql).name(), sql, Util.codingData(parameterValues), TimeUnit.NANOSECONDS.toMillis(timeElapsedNanos),
-                            user, Util.getHostName(), Instant.now().toEpochMilli(), category.getName());
-                    if (SAMPLING_STRATEGY.checkSimple(sqlDetail)) {
-                        SQLRecordProducer.sendSQLRecord(sqlDetail);
-                    }else {
-                        log.debug("sampling continue, current sql record info:{}", Util.getGson().toJson(sqlDetail));
-                    }
+        ConnectionInformation connectionInformation = loggable.getConnectionInformation();
+        String sql = loggable.getSql();
+        if(StringUtils.isNotBlank(sql)) {
+            sql = sql.trim();
+            if (!getInitSQL().contains(sql)) {
+                Map<Integer, Value> parameterValues = null;
+                if (loggable instanceof PreparedStatementInformation) {
+                    parameterValues = (Map<Integer, Value>) ReflectUtils.invoke(PreparedStatementInformation.class, "getParameterValues", loggable);
+                }
+                JdbcConnection connection = (JdbcConnection) connectionInformation.getConnection();
+                String path = ConnectionUrlParser.parseConnectionString(connection.getURL()).getPath();
+                String database = path == null ? "" : path;
+                String user = connection.getUser();
+                SQLDetail sqlDetail = new SQLDetail(SQLAnalyseConfig.appId, SQLAnalyseConfig.serviceName, database,
+                        OperationParser.parse(sql).name(), sql, Util.codingData(parameterValues), TimeUnit.NANOSECONDS.toMillis(timeElapsedNanos),
+                        user, Util.getHostName(), Instant.now().toEpochMilli(), category.getName());
+                if (SAMPLING_STRATEGY.checkSimple(sqlDetail)) {
+                    SQLRecordProducer.sendSQLRecord(sqlDetail);
                 }else {
-                    log.debug("init sql:{} , continue ", sql);
+                    log.debug("sampling continue, current sql record info:{}", Util.getGson().toJson(sqlDetail));
                 }
             }else {
-                log.debug("sql is empty, continue");
+                log.debug("init sql:{} , continue ", sql);
             }
-        } catch (SQLException throwables) {
-            log.error("parse sql error", throwables);
+        }else {
+            log.debug("sql is empty, continue");
         }
     }
 
