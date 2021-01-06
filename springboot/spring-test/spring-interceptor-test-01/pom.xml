@@ -3,21 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>springboot</artifactId>
+        <artifactId>spring-test</artifactId>
         <groupId>org.py.test</groupId>
         <version>1.0-SNAPSHOT</version>
-
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>spring-test</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>spring-learn-test-01</module>
-        <module>spring-error-test-01</module>
-        <module>spring-interceptor-test-01</module>
-        <module>spring-filter-test-01</module>
-    </modules>
+    <artifactId>spring-interceptor-test-01</artifactId>
 
 
 </project>
