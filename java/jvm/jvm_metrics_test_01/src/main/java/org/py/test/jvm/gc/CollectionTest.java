@@ -61,4 +61,30 @@ public class CollectionTest {
         }
     }
 
+    /**
+     * -Xmx1G -Xms1G -XX:+UseG1GC -XX:+UseConcMarkSweepGC  -XX:+UseParNewGC -XshowSettings:vm -XX:+PrintFlagsFinal
+     *
+     * Conflicting collector combinations in option list; please refer to the release notes for the combinations allowed
+     * Error: Could not create the Java Virtual Machine.
+     * Error: A fatal exception has occurred. Program will exit.
+     */
+    @Test
+    public void testG1_CMS() {
+        while (true) {
+            Integer[] intArray = new Integer[1024];
+        }
+    }
+
+    /**
+     * -Xmx1G -Xms1G -XX:+UseConcMarkSweepGC  -XX:+UseParNewGC -XX:+UseG1GC -XshowSettings:vm -XX:+PrintFlagsFinal
+     *
+     * Conflicting collector combinations in option list; please refer to the release notes for the combinations allowed
+     */
+    @Test
+    public void testCMS_G1() {
+        while (true) {
+            Integer[] intArray = new Integer[1024];
+        }
+    }
+
 }
