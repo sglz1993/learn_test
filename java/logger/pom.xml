@@ -11,6 +11,7 @@
     <module>logger-springboot-springprofile-03</module>
     <module>logger-springboot-apollo-04</module>
     <module>logger-apollo-test-05</module>
+      <module>logback-filter-test-01</module>
   </modules>
   <parent>
     <artifactId>learn_test</artifactId>
