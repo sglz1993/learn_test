@@ -1,0 +1,37 @@
+Java HotSpot(TM) 64-Bit Server VM (25.251-b08) for bsd-amd64 JRE (1.8.0_251-b08), built on Mar 12 2020 02:36:37 by "java_re" with gcc 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2336.11.00)
+Memory: 4k page, physical 16777216k(708256k free)
+
+/proc/meminfo:
+
+CommandLine flags: -XX:GCLogFileSize=52428800 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/Users/pengyue.du/Code/Meijia/Work01/learn_test/java/jvm/jvm_metrics_test_01/file/test_file/gc_log/oom-%t.bin -XX:InitialHeapSize=1048576 -XX:MaxHeapSize=1048576 -XX:NumberOfGCLogFiles=3 -XX:+PrintGC -XX:+PrintGCTimeStamps -XX:+UseCompressedClassPointers -XX:+UseCompressedOops -XX:+UseGCLogFileRotation -XX:+UseParallelGC 
+0.071: [GC (Allocation Failure)  512K->480K(1536K), 0.0005860 secs]
+0.099: [GC (Allocation Failure)  988K->512K(1536K), 0.0008080 secs]
+0.115: [GC (Allocation Failure)  1024K->592K(1536K), 0.0007377 secs]
+0.129: [GC (Allocation Failure)  1088K->631K(1536K), 0.0007335 secs]
+0.141: [GC (Allocation Failure)  1137K->703K(1536K), 0.0006697 secs]
+0.154: [GC (Allocation Failure)  1215K->774K(1536K), 0.0008337 secs]
+0.166: [GC (Allocation Failure) -- 1286K->1530K(1536K), 0.0015229 secs]
+0.168: [Full GC (Ergonomics)  1530K->391K(1536K), 0.0049611 secs]
+0.189: [Full GC (Ergonomics)  903K->446K(1536K), 0.0062248 secs]
+0.208: [Full GC (Ergonomics)  948K->643K(1536K), 0.0067560 secs]
+0.225: [Full GC (Ergonomics)  950K->654K(1536K), 0.0077733 secs]
+0.238: [Full GC (Ergonomics)  950K->674K(1536K), 0.0079377 secs]
+0.250: [Full GC (Ergonomics)  950K->675K(1536K), 0.0058548 secs]
+0.259: [Full GC (Ergonomics)  943K->696K(1536K), 0.0064154 secs]
+0.269: [Full GC (Ergonomics)  950K->703K(1536K), 0.0059922 secs]
+0.278: [Full GC (Ergonomics)  950K->683K(1536K), 0.0063701 secs]
+0.288: [Full GC (Ergonomics)  944K->700K(1536K), 0.0055659 secs]
+0.300: [Full GC (Ergonomics)  949K->700K(1536K), 0.0051531 secs]
+0.309: [Full GC (Ergonomics)  950K->714K(1536K), 0.0048916 secs]
+0.318: [Full GC (Ergonomics)  947K->711K(1536K), 0.0052374 secs]
+0.327: [Full GC (Ergonomics)  950K->714K(1536K), 0.0052998 secs]
+0.337: [Full GC (Ergonomics)  950K->709K(1536K), 0.0058100 secs]
+0.343: [Full GC (Ergonomics)  949K->920K(1536K), 0.0052594 secs]
+0.349: [Full GC (Ergonomics)  949K->948K(1536K), 0.0053287 secs]
+0.354: [Full GC (Ergonomics)  1021K->1019K(1536K), 0.0053543 secs]
+0.360: [Full GC (Allocation Failure)  1019K->974K(1536K), 0.0049525 secs]
+0.365: [Full GC (Ergonomics)  1018K->1014K(1536K), 0.0052804 secs]
+0.370: [Full GC (Ergonomics)  1018K->1018K(1536K), 0.0058006 secs]
+0.376: [Full GC (Allocation Failure)  1018K->1018K(1536K), 0.0050714 secs]
+0.392: [Full GC (Ergonomics)  1023K->651K(1536K), 0.0053538 secs]
+0.403: [Full GC (Ergonomics)  927K->681K(1536K), 0.0056352 secs]
