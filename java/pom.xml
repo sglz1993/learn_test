@@ -9,6 +9,7 @@
         <module>jvm</module>
         <module>jdk11</module>
         <module>kafka</module>
+        <module>web</module>
     </modules>
     <parent>
         <artifactId>learn_test</artifactId>

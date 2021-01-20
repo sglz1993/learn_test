@@ -18,6 +18,7 @@
     <module>sentinel</module>
       <module>apollo</module>
       <module>scala</module>
+      <module>friend_model</module>
   </modules>
 
   <name>learn_test</name>

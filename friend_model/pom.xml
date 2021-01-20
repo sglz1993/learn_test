@@ -10,6 +10,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>friend_model</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>poi_model</module>
+    </modules>
 
 
 </project>
