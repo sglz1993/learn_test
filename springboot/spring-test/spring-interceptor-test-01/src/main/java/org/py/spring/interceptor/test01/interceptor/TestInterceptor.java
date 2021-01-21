@@ -21,7 +21,10 @@ public class TestInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String requestURI = request.getRequestURI();
         log.info("request uri:{}", requestURI);
-        return 10/0 == 1;
+        if (requestURI.equals("/") || requestURI.equals("/hello")) {
+            return 10/0 == 1;
+        }
+        return true;
 //        return true;
 //        return false;
     }

@@ -12,4 +12,9 @@ public class HelloController {
         return SiteUtil.nowSite();
     }
 
+    @RequestMapping("/hello")
+    public Object hello2() {
+        return SiteUtil.nowSite();
+    }
+
 }
