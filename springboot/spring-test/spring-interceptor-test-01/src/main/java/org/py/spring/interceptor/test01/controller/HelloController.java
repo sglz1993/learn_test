@@ -17,4 +17,14 @@ public class HelloController {
         return SiteUtil.nowSite();
     }
 
+    @RequestMapping("/my404NotFound")
+    public Object my404NotFound() {
+        return ":my404NotFound";
+    }
+
+    @RequestMapping("/error")
+    public Object error() {
+        return 10/0;
+    }
+
 }
