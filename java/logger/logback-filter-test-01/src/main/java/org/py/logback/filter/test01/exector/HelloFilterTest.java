@@ -1,10 +1,16 @@
 package org.py.logback.filter.test01.exector;
 
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.LoggerContext;
+import ch.qos.logback.classic.turbo.TurboFilter;
+import ch.qos.logback.core.spi.FilterReply;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.py.logback.filter.test01.filter.HelloLogbackFilter;
 import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
+import org.slf4j.helpers.MessageFormatter;
 
 @Slf4j
 public class HelloFilterTest {
@@ -26,6 +32,18 @@ public class HelloFilterTest {
         log.info("lalal info:{}, {}", "info", 2);
         log.warn("lalal warn:{}, {}", "warn", 3);
         log.error("lalal error:{}, {}", "error", 4);
+    }
+
+    @Test
+    public void testLogbackFilter() {
+        LoggerContext loggerFactory = (LoggerContext) LoggerFactory.getILoggerFactory();
+        loggerFactory.addTurboFilter(new TurboFilter() {
+            @Override
+            public FilterReply decide(Marker marker, Logger logger, Level level, String format, Object[] params, Throwable t) {
+                String msg = MessageFormatter.arrayFormat(format, params).getMessage();
+                return FilterReply.NEUTRAL;
+            }
+        });
     }
 
 }

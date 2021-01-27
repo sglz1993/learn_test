@@ -10,6 +10,19 @@ import static java.util.regex.Pattern.*;
 public class SimpleTest {
 
     @Test
+    public void test2() {
+        int[] intarr = new int[]{};
+        int intvalue = 1;
+        byte bvalue = 1;
+        byte[] bytearr = new byte[]{};
+        long[] longarr = new long[]{};
+        long longvalue = 1L;
+        boolean[] barr = new boolean[]{};
+        boolean booleanvalue = true;
+
+    }
+
+    @Test
     public void test01() {
         System.out.println("test2020121612345test20201216123".length());
         String subject = "1vID:test2020121612345test20201216123/env:dev";
