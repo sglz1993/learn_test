@@ -1,5 +1,7 @@
 package org.py.test.log_hello.test;
 
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.Test;
 
 import java.time.ZonedDateTime;
@@ -11,6 +13,18 @@ import java.util.regex.Pattern;
 import static java.util.regex.Pattern.compile;
 
 public class SimpleTest {
+
+    @Test
+    public void test5() {
+        //随机生成长度为10-32位的字符串
+        String s = RandomStringUtils.randomAlphanumeric(RandomUtils.nextInt(10, 32));
+    }
+
+    @Test
+    public void test4() {
+        String s = Integer.toString((1 & 0xff) + 0x100, 16);
+        System.out.println(s);
+    }
 
     @Test
     public void test3() {

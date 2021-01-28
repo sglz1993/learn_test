@@ -1,4 +1,4 @@
-package org.py.test.log_hello.http.baiyi;
+package org.py.test.log_hello.http.httpClient.baiyi;
 
 import org.apache.http.*;
 import org.apache.http.client.ClientProtocolException;

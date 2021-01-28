@@ -1,4 +1,4 @@
-package org.py.test.log_hello.http.index.example;
+package org.py.test.log_hello.http.httpClient.index.example;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;

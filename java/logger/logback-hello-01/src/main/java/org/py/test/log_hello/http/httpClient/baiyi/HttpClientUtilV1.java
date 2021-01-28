@@ -1,4 +1,4 @@
-package org.py.test.log_hello.http.baiyi;
+package org.py.test.log_hello.http.httpClient.baiyi;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
