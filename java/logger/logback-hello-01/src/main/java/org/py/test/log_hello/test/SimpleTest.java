@@ -2,24 +2,49 @@ package org.py.test.log_hello.test;
 
 import org.junit.Test;
 
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static java.util.regex.Pattern.*;
+import static java.util.regex.Pattern.compile;
 
 public class SimpleTest {
 
     @Test
-    public void test2() {
-        int[] intarr = new int[]{};
-        int intvalue = 1;
-        byte bvalue = 1;
-        byte[] bytearr = new byte[]{};
-        long[] longarr = new long[]{};
-        long longvalue = 1L;
-        boolean[] barr = new boolean[]{};
-        boolean booleanvalue = true;
+    public void test3() {
+        Object intarr = new int[]{};
+        Object intvalue = 1;
+        Object bvalue = ',';
+        Object bytearr = new byte[]{};
+        Object longarr = new long[]{};
+        Object longvalue = 1L;
+        Object barr = new boolean[]{};
+        Object booleanvalue = true;
+//        System.out.println();
+//        LogUtil.execSimpleAndPrintln("bytearr instanceof byte[]", Util.stringMap("bytearr", bytearr));
+        System.out.println(byte.class.getName() + "\t"+ (bvalue instanceof byte[]));
+        System.out.println(int[].class.getName() + "\t"+ (intarr instanceof byte[]));
+        System.out.println(int.class.getName() + "\t"+ (intvalue instanceof byte[]));
+        System.out.println(long[].class.getName() + "\t"+ (longarr instanceof byte[]));
+        System.out.println(long.class.getName() + "\t"+ (longvalue instanceof byte[]));
+        System.out.println(boolean[].class.getName() + "\t"+ (barr instanceof byte[]));
+        System.out.println(boolean.class.getName() + "\t"+ (booleanvalue instanceof byte[]));
+        System.out.println(((byte[])bytearr).length);
+    }
 
+    @Test
+    public void test2() {
+        ZonedDateTime zdt = ZonedDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm ZZZZ");
+        System.out.println(formatter.format(zdt));
+
+        DateTimeFormatter zhFormatter = DateTimeFormatter.ofPattern("yyyy MMM dd EE HH:mm ZZZZ", Locale.CHINA);
+        System.out.println(zhFormatter.format(zdt));
+
+        DateTimeFormatter usFormatter = DateTimeFormatter.ofPattern("E, MMMM/dd/yyyy HH:mm", Locale.US);
+        System.out.println(usFormatter.format(zdt));
     }
 
     @Test

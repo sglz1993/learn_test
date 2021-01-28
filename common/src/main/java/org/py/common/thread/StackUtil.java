@@ -5,6 +5,22 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class StackUtil {
 
+    public static String getClassName(int deap) {
+        return getStackElement(1 + deap).getClassName();
+    }
+
+    /**
+     * obtain current class name
+     * @return
+     */
+    public static String getClassName() {
+        return getStackElement(1).getClassName();
+    }
+
+    public static StackTraceElement getStackElement(int deap) {
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        return stackTrace[2 + deap];
+    }
 
     public static void printThreadStack(int maxDeap) {
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();

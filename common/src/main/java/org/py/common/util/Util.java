@@ -63,4 +63,8 @@ public class Util {
         return map;
     }
 
+    public static <V> Map<String, V> stringMap(Object... kvPairs) {
+        return asMap(kvPairs);
+    }
+
 }
