@@ -7,10 +7,10 @@ import org.apache.commons.collections4.MapUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.config.SocketConfig;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
@@ -117,7 +117,8 @@ public class HttpClientUtilV1 {
     }
 
     public static String get(String baseUrl, Map<String, Object> headerMap, Map<String, Object> paramMap) {
-        HttpClientBuilder builder = HttpClients.custom().setDefaultSocketConfig(SocketConfig.copy(SocketConfig.DEFAULT).setSoTimeout(5000).build());
+//        HttpClientBuilder builder = HttpClients.custom().setDefaultSocketConfig(SocketConfig.copy(SocketConfig.DEFAULT).setSoTimeout(5000).build());
+        HttpClientBuilder builder = HttpClients.custom();
         try (CloseableHttpClient httpclient = builder.build()) {
             URIBuilder uriBuilder = new URIBuilder(baseUrl);
             if(paramMap != null) {
@@ -129,11 +130,13 @@ public class HttpClientUtilV1 {
                 }
             }
             HttpGet httpget = new HttpGet(uriBuilder.build());
-//            RequestConfig config = httpget.getConfig();
-//            if(config == null) {
-//                config = RequestConfig.copy(RequestConfig.DEFAULT).build();
-//            }
-//            httpget.setConfig(config);
+            {
+                RequestConfig config = httpget.getConfig();
+                if(config == null) {
+                    config = RequestConfig.copy(RequestConfig.DEFAULT).setSocketTimeout(5000).build();
+                }
+                httpget.setConfig(config);
+            }
             if(headerMap != null) {
                 for(Map.Entry<String, Object> entry: headerMap.entrySet()) {
                     Object value = entry.getValue();

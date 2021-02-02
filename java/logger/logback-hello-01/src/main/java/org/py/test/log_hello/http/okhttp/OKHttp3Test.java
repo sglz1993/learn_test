@@ -61,10 +61,37 @@ public class OKHttp3Test {
         }
     }
 
+//    /**
+//     * 示例： https://www.baeldung.com/okhttp-timeouts
+//     * 其实只是配置了读超时
+//     */
+//    @Test
+//    public void testSingleRequestTimeout() {
+//        OkHttpClient defaultClient = new OkHttpClient.Builder()
+//                .readTimeout(1, TimeUnit.SECONDS)
+//                .build();
+//
+//        Request request = new Request.Builder()
+//                .url("https://httpbin.org/delay/2")
+//                .build();
+//
+//        Throwable thrown = catchThrowable(() -> defaultClient.newCall(request).execute());
+//
+//        assertThat(thrown).isInstanceOf(InterruptedIOException.class);
+//
+//        OkHttpClient extendedTimeoutClient = defaultClient.newBuilder()
+//                .readTimeout(5, TimeUnit.SECONDS)
+//                .build();
+//
+//        Response response = extendedTimeoutClient.newCall(request).execute();
+//        assertThat(response.code()).isEqualTo(200);
+//    }
+
 
     private String get(String url) throws IOException {
         OkHttpClient client = new OkHttpClient.Builder().readTimeout(5, TimeUnit.SECONDS)
                 .build();
+        client.newBuilder().build();
         Request request = new Request.Builder()
                 .url(url)
                 .build();
