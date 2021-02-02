@@ -48,6 +48,7 @@ import java.util.Map;
  *   5. 对文件、流、字节数组的支持
  *   6. 对json的支持
  */
+@SuppressWarnings("ALL")
 @Slf4j
 public class HttpClientUtilV1 {
 
