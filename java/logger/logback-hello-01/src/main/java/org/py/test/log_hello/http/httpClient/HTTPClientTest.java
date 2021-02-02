@@ -18,7 +18,10 @@ public class HTTPClientTest {
     }
 
     /**
+     * java.lang.RuntimeException: java.net.SocketTimeoutException: Read timed out
      *
+     * 参考：https://www.cnblogs.com/nuccch/p/10611877.html
+     * 实际：HttpClientBuilder builder = HttpClients.custom().setDefaultSocketConfig(SocketConfig.copy(SocketConfig.DEFAULT).setSoTimeout(5000).build());
      */
     @Test
     public void testReadTimeout() {

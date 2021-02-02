@@ -10,10 +10,12 @@ import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.config.SocketConfig;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
@@ -115,7 +117,8 @@ public class HttpClientUtilV1 {
     }
 
     public static String get(String baseUrl, Map<String, Object> headerMap, Map<String, Object> paramMap) {
-        try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
+        HttpClientBuilder builder = HttpClients.custom().setDefaultSocketConfig(SocketConfig.copy(SocketConfig.DEFAULT).setSoTimeout(5000).build());
+        try (CloseableHttpClient httpclient = builder.build()) {
             URIBuilder uriBuilder = new URIBuilder(baseUrl);
             if(paramMap != null) {
                 for(Map.Entry<String, Object> entry : paramMap.entrySet()) {
@@ -126,6 +129,11 @@ public class HttpClientUtilV1 {
                 }
             }
             HttpGet httpget = new HttpGet(uriBuilder.build());
+//            RequestConfig config = httpget.getConfig();
+//            if(config == null) {
+//                config = RequestConfig.copy(RequestConfig.DEFAULT).build();
+//            }
+//            httpget.setConfig(config);
             if(headerMap != null) {
                 for(Map.Entry<String, Object> entry: headerMap.entrySet()) {
                     Object value = entry.getValue();
