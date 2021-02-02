@@ -2,7 +2,6 @@ package org.py.test.log_hello;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.jvm.hotspot.HelloWorld;
 
 /**
  *
@@ -40,7 +39,7 @@ public class HelloLogback {
 
 
     public static void main(String[] args) {
-        Logger logger = LoggerFactory.getLogger(HelloWorld.class);
+        Logger logger = LoggerFactory.getLogger(HelloLogback.class);
         System.out.println(System.currentTimeMillis());
         logger.info("Hello World");
     }

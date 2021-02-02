@@ -3,7 +3,6 @@ package org.learn.log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
-import sun.jvm.hotspot.HelloWorld;
 
 import java.util.Map;
 import java.util.UUID;
@@ -44,7 +43,7 @@ public class HelloLogback {
 
 
     public static void main(String[] args) throws Exception {
-        Logger logger = LoggerFactory.getLogger(HelloWorld.class);
+        Logger logger = LoggerFactory.getLogger(HelloLogback.class);
         new Thread("test_thread1") {
             @Override
             public void run() {
