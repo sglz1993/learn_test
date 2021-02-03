@@ -7,7 +7,6 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -38,6 +37,7 @@ public class OKHttp3ExampleTest {
                 System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
             }
 
+            System.out.println("******************************************************************************************************************************************************");
             System.out.println(response.body().string());
         }
     }
@@ -278,12 +278,14 @@ public class OKHttp3ExampleTest {
             if (!response.isSuccessful()) {
                 throw new IOException("Unexpected code " + response);
             }
-            Map<String, String> map = gson.fromJson(response.body().toString(), Map.class);
-
-            for (Map.Entry entry : map.entrySet()) {
-                System.out.println(entry.getKey());
-                System.out.println(entry.getValue());
-            }
+            System.out.println("******************************************************************************************************************************************************");
+            System.out.println(response.body().string());
+            System.out.println("******************************************************************************************************************************************************");
+//            Map<String, String> map = gson.fromJson(response.body().source().readUtf8(), Map.class);
+//
+//            for (Map.Entry entry : map.entrySet()) {
+//                System.out.println(String.format("%s\t%s", entry.getKey(), entry.getValue()));
+//            }
         }
     }
 
@@ -387,6 +389,7 @@ public class OKHttp3ExampleTest {
      */
     @Test
     public void testPercallConfiguration() {
+        OkHttpClient build = new OkHttpClient.Builder().connectionPool(new ConnectionPool(10, 5, TimeUnit.MINUTES)).build();
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url("http://httpbin.org/delay/1") // This URL is served with a 1 second delay.

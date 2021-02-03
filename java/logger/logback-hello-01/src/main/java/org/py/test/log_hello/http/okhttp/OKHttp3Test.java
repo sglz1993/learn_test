@@ -1,5 +1,7 @@
 package org.py.test.log_hello.http.okhttp;
 
+import lombok.extern.slf4j.Slf4j;
+import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -19,7 +21,23 @@ import java.util.concurrent.TimeUnit;
  * </dependency>
  */
 @SuppressWarnings("All")
+@Slf4j
 public class OKHttp3Test {
+
+    /**
+     * 实现异步，获取时未执行完阻塞，等待结果
+     * @throws IOException
+     */
+    @Test
+    public void testAsyncExec() throws IOException {
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url("http://localhost:8070/openapi/v1/apps")
+                .build();
+        Call call = client.newCall(request);
+//        System.out.println(call.execute().body().string());
+        OKHttp3UtilV1.Resp resp = new OKHttp3UtilV1.Resp(call);
+        log.info(resp.getResult());
+    }
 
     /**
      * java.net.ConnectException: Failed to connect to /127.0.0.1:9019

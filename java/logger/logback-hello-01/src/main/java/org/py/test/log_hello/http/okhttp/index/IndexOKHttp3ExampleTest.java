@@ -2,7 +2,6 @@ package org.py.test.log_hello.http.okhttp.index;
 
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
-import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
 import javax.net.ssl.SSLContext;
@@ -116,27 +115,42 @@ public class IndexOKHttp3ExampleTest {
          * 不会为使网络短路的缓存响应调用。
          * 观察数据，就像通过网络传输数据一样。
          * 访问Connection带有请求的。
+     *
+     * 注：先执行应用interceptor,后执行networkInterceptor，先添加的先执行，在外层
      */
     @Test
-    public void testInterceptor() {
-        new OkHttpClient.Builder().addNetworkInterceptor(new Interceptor() {
-            @NotNull
-            @Override
-            public Response intercept(@NotNull Chain chain) throws IOException {
-                return null;
-            }
-        }).addInterceptor(new Interceptor() {
-            @NotNull
-            @Override
-            public Response intercept(@NotNull Chain chain) throws IOException {
-                Request request = chain.request();
-                Call call = chain.call();
-                Response response = chain.proceed(chain.request());
-                int code = response.code();
-                return null;
-            }
+    public void testInterceptor() throws IOException {
+        OkHttpClient.Builder builder = new OkHttpClient.Builder()
+                .addNetworkInterceptor(chain -> {
+            log.info("addNetworkInterceptor  1  start");
+            Response response = chain.proceed(chain.request());
+            log.info("addNetworkInterceptor  1  end");
+            return response;
+        }).addInterceptor(chain -> {
+            log.info("addInterceptor  1  start");
+            Request request = chain.request();
+            Call call = chain.call();
+            Response response = chain.proceed(chain.request());
+            log.info("addInterceptor  1  end");
+            int code = response.code();
+            return response;
+        }).addNetworkInterceptor(chain -> {
+            log.info("addNetworkInterceptor  2  start");
+            Response response = chain.proceed(chain.request());
+            log.info("addNetworkInterceptor  2  end");
+            return response;
+        }).addInterceptor(chain -> {
+            log.info("addInterceptor  2  start");
+            Request request = chain.request();
+            Call call = chain.call();
+            Response response = chain.proceed(chain.request());
+            log.info("addInterceptor  2  end");
+            int code = response.code();
+            return response;
         });
-
+        OkHttpClient client = builder.build();
+        Request request = new Request.Builder().url("https://www.baidu.com").build();
+        Response response = client.newCall(request).execute();
     }
 
 
