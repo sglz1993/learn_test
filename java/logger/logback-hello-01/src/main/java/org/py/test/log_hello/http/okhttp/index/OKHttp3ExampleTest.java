@@ -16,6 +16,11 @@ import java.util.concurrent.TimeUnit;
 public class OKHttp3ExampleTest {
 
     //同步get
+
+    /**
+     * 普通的同步GET请求
+     * @throws IOException
+     */
     @Test
     public void testSynchronousGet() throws IOException {
         OkHttpClient client = new OkHttpClient();
@@ -38,6 +43,10 @@ public class OKHttp3ExampleTest {
     }
 
     //异步get
+    /**
+     * 异步Get请求
+     * 本身不能阻塞同步获取，但可以封装一下通过异步执行，同步获取
+     */
     @Test
     public void testAsynchronousGet() {
         OkHttpClient client = new OkHttpClient();
@@ -69,6 +78,12 @@ public class OKHttp3ExampleTest {
     }
 
     // 请求头
+    /**
+     * 可以添加请求头，两种方式添加
+     * header 添加或者覆盖
+     * addHeader 只添加，如Cookie类型的
+     * @throws IOException
+     */
     @Test
     public void testAccessingHeaders() throws IOException {
         OkHttpClient client = new OkHttpClient();
@@ -90,6 +105,12 @@ public class OKHttp3ExampleTest {
     }
 
     // 请求体为字符串
+    /**
+     * 请求体为字符串的post请求
+     *
+     * RequestBody.create 其实也是自己构建了一个匿名的RequestBody对象，但还是有一些问题，暂时不懂，可能需要Kotlin语言支持
+     * @throws IOException
+     */
     @Test
     public void testPostingAString() throws IOException {
         MediaType MEDIA_TYPE_MARKDOWN
@@ -117,6 +138,10 @@ public class OKHttp3ExampleTest {
     }
 
     // post请求流
+    /**
+     * 自定义RequestBody以传输流数据
+     * @throws IOException
+     */
     @Test
     public void testPostStreaming() throws IOException {
         MediaType MEDIA_TYPE_MARKDOWN
@@ -160,6 +185,10 @@ public class OKHttp3ExampleTest {
     }
 
     // post请求文件
+    /**
+     * 跟请求字符串一样
+     * @throws IOException
+     */
     @Test
     public void testPostingAFile() throws IOException {
         final MediaType MEDIA_TYPE_MARKDOWN
@@ -181,6 +210,10 @@ public class OKHttp3ExampleTest {
     }
 
     //post请求表单
+    /**
+     * RequestBody的两个子类型之一：FormBody，MultipartBody
+     * @throws IOException
+     */
     @Test
     public void testPostForm() throws IOException {
         OkHttpClient client = new OkHttpClient();
@@ -201,6 +234,10 @@ public class OKHttp3ExampleTest {
     }
 
     //post多类型请求
+    /**
+     * RequestBody的两个子类型之一：FormBody，MultipartBody
+     * @throws IOException
+     */
     @Test
     public void testPostMultipartRequest() throws IOException {
         String IMGUR_CLIENT_ID = "...";
@@ -252,13 +289,14 @@ public class OKHttp3ExampleTest {
 
     //响应缓存
     /**
-     * 要缓存响应，您需要一个可读写的缓存目录，以及缓存大小的限制。缓存目录应该是私有的，不受信任的应用程序应该不能读取其内容！
+     * 要缓存响应，您需要一个可读写的缓存目录，以及缓存大小的限制(单位字节)。缓存目录应该是私有的，不受信任的应用程序应该不能读取其内容！
      *
      * 多个缓存同时访问同一缓存目录是错误的。大多数应用程序应该只调用new OkHttpClient()一次，使用缓存配置它，并在所有地方使用同一实例。否则，这两个缓存实例将相互踩踏，破坏响应缓存，并可能导致程序崩溃。
      */
     @Test
     public void testResponseCaching() throws IOException {
-        Cache cache = new Cache(new File(""), 1L);
+        //maxSize: bytes
+        Cache cache = new Cache(new File("/Users/pengyue.du/Code/Meijia/Work01/learn_test/java/logger/logback-hello-01/lib/cache"), 10 * 1024 * 1024L);
         OkHttpClient client = new OkHttpClient.Builder()
                 .cache(cache)
                 .build();
@@ -290,6 +328,9 @@ public class OKHttp3ExampleTest {
     }
 
     //取消网络调用
+    /**
+     * call.execute() 才是真正执行请求，可以在执行时call.cancel();取消，取消时正在执行的请求有IOException异常
+     */
     @Test
     public void testCancelingACell() {
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
@@ -300,7 +341,6 @@ public class OKHttp3ExampleTest {
 
         final long startNanos = System.nanoTime();
         final Call call = client.newCall(request);
-
         // Schedule a job to cancel the call in 1 second.
         executor.schedule(new Runnable() {
             @Override public void run() {
@@ -321,6 +361,10 @@ public class OKHttp3ExampleTest {
     }
 
     //超时
+    /**
+     * 设置 连接、读、写超时时间
+     * @throws IOException
+     */
     @Test
     public void testTimeouts() throws IOException {
         OkHttpClient client = new OkHttpClient.Builder()
@@ -338,6 +382,9 @@ public class OKHttp3ExampleTest {
     }
 
     // 单次请求配置
+    /**
+     * 其实就是根据旧client构建了一个新的client，但是该client与之前的client共用一个连接池
+     */
     @Test
     public void testPercallConfiguration() {
         OkHttpClient client = new OkHttpClient();
@@ -375,7 +422,6 @@ public class OKHttp3ExampleTest {
                         if (response.request().header("Authorization") != null) {
                             return null; // Give up, we've already attempted to authenticate.
                         }
-
                         System.out.println("Authenticating for response: " + response);
                         System.out.println("Challenges: " + response.challenges());
                         String credential = Credentials.basic("jesse", "password1");

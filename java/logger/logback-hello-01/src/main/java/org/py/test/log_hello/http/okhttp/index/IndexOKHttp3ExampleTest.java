@@ -129,6 +129,8 @@ public class IndexOKHttp3ExampleTest {
             @NotNull
             @Override
             public Response intercept(@NotNull Chain chain) throws IOException {
+                Request request = chain.request();
+                Call call = chain.call();
                 Response response = chain.proceed(chain.request());
                 int code = response.code();
                 return null;
