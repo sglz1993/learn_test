@@ -13,9 +13,7 @@
 
     <logger name="org.py.test.p6spy" level="debug"/>
 
-    <!--    <root level="${log.root.level:-error}">-->
-    <!--    <root level="${log.root.level:-info}">-->
-    <root level="${log.root.level:-debug}">
+    <root level="info">
         <appender-ref ref="stdout"/>
     </root>
 

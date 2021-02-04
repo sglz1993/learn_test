@@ -46,4 +46,19 @@ public class HelloFilterTest {
         });
     }
 
+    /**
+     * MessageFormatter.arrayFormat(format, params, t).getMessage() 当前不支持参数为空，并且异常处理有问题
+     */
+    @Test
+    public void testExcepFormatter() {
+        LoggerContext loggerFactory = (LoggerContext) LoggerFactory.getILoggerFactory();
+        loggerFactory.addTurboFilter(new HelloLogbackFilter());
+        try {
+            int i = 1/0;
+        } catch (Exception e) {
+            System.out.println(MessageFormatter.arrayFormat("lalala", new Object[]{e}).getMessage());
+            log.error("", e);
+        }
+    }
+
 }

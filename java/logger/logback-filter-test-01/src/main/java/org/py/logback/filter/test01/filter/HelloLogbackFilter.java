@@ -22,6 +22,7 @@ public class HelloLogbackFilter extends TurboFilter {
                 logger.getName(), level.toString(), level.toInt(), format, Lists.newArrayList(params).toString()));
         System.out.println(MessageFormatter.arrayFormat(format, Stream.of(params)
                 .map(JSON::toJSONString).toArray()).getMessage());
+//        System.out.println(MessageFormatter.arrayFormat(format, params, t).getMessage());
         return FilterReply.NEUTRAL;
     }
 
