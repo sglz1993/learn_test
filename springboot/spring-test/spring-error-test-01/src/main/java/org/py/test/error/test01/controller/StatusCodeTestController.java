@@ -1,7 +1,6 @@
 package org.py.test.error.test01.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.core.StandardHostValve;
 import org.py.test.error.test01.config.ApplicationExceptionHandler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -135,7 +134,7 @@ public class StatusCodeTestController {
     /**
      * send error 方式，只支持标准http状态码; 且不会带上返回的结果
      * 原因：sendError 标记该响应异常，导致Tomcat重定向对应异常处理Controller，返回对应响应
-     * @see StandardHostValve#status(org.apache.catalina.connector.Request, org.apache.catalina.connector.Response)
+     * @see org.apache.catalina.core.StandardHostValve#status(org.apache.catalina.connector.Request, org.apache.catalina.connector.Response)
      * @param response
      * @return
      * {
