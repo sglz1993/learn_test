@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver;
+import org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -23,6 +25,13 @@ public class StatusCodeTestController {
     /**
      * 注解方式，只支持标准http状态码
      * 也可以在异常处理的时候标注在方法上
+     *
+     * 底层调用了方法：org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver#applyStatusAndReason(int, java.lang.String, javax.servlet.http.HttpServletResponse)
+     *  该方法调用了：response.sendError(statusCode);
+     *  会导致重定向到 ErrorController
+     * @see ResponseStatusExceptionResolver#doResolveException(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Object, java.lang.Exception)
+     * @see ServletInvocableHandlerMethod#setResponseStatus(org.springframework.web.context.request.ServletWebRequest)
+     *  可以看出来，当通过 @ExceptionHandler + @ResponseStatus 处理时，reason不写，则只设置status，不为空则设置error
      * @return
      * 状态码 400
      * 信息：
@@ -52,6 +61,11 @@ public class StatusCodeTestController {
         throw  new ApplicationExceptionHandler.MyTestStatusException("lalalal");
     }
 
+    @GetMapping("error402")
+    public String error402() {
+        throw  new ApplicationExceptionHandler.MyTestStatusExceptionV2("lalalal402");
+    }
+
     /**
      * 异常类 + 注解方式，只支持标准http状态码
      *
@@ -67,7 +81,7 @@ public class StatusCodeTestController {
         throw new ClientException("客户端异常哦");
     }
 
-    @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR, reason = "服务器失联了，请到月球上呼叫试试~~")
+    @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
     public static class ServerException extends RuntimeException {
         public ServerException(String message) {
             super(message);
