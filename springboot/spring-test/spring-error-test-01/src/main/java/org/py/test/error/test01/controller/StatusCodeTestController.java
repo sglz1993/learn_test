@@ -49,6 +49,10 @@ public class StatusCodeTestController {
      *
      *
      * 不知道为什么 @ResponseStatus 注解方式使用的时候 reason 属性不起作用，使用的是标准状态码的reason
+     *   原因：
+     *      @see org.springframework.boot.autoconfigure.web.ErrorProperties#includeMessage
+     *      默认为 IncludeAttribute.NEVER, 可以配置，如： server.error.include-message=ALWAYS
+     *
      */
     @GetMapping("error400")
     @ResponseStatus(code = HttpStatus.BAD_REQUEST, reason = "400test!")
