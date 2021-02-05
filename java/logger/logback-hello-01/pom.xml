@@ -84,6 +84,14 @@
     </dependency>
 
 
+    <!-- https://mvnrepository.com/artifact/com.github.cloudecho/qrcode -->
+    <dependency>
+      <groupId>com.github.cloudecho</groupId>
+      <artifactId>qrcode</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+
+
   </dependencies>
 
   <build>

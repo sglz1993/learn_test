@@ -1,9 +1,14 @@
 package org.py.test.log_hello.test;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.Test;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -12,7 +17,34 @@ import java.util.regex.Pattern;
 
 import static java.util.regex.Pattern.compile;
 
+@Slf4j
 public class SimpleTest {
+
+    @Test
+    public void test6() throws IOException, URISyntaxException {
+        String urls = "https://mobile.ximalaya.com/passport-sign-mobile/qrcode/login/0867C4572F9E4D8FA65F01D40D15473D/qrcode-7172636f6465?to=openapi";
+        URL url = new URL(urls);
+        String authority = url.getAuthority();
+        Object content = url.getContent();
+        int defaultPort = url.getDefaultPort();
+        String file = url.getFile();
+        String host = url.getHost();
+        String path = url.getPath();
+        int port = url.getPort();
+        String protocol = url.getProtocol();
+        String query = url.getQuery();
+        String ref = url.getRef();
+        String userInfo = url.getUserInfo();
+        int i = url.hashCode();
+        String s = url.toExternalForm();
+        URI uri = url.toURI();
+        String authority1 = uri.getAuthority();
+        String fragment = uri.getFragment();
+        String host1 = uri.getHost();
+        String path1 = uri.getPath();
+        String query1 = uri.getQuery();
+        System.out.println("8888888888888888888");
+    }
 
     @Test
     public void test5() {
