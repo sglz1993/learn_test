@@ -17,8 +17,15 @@ import java.util.HashMap;
 
 public class QRCodeTest {
 
+
     /**
      * 参考：https://www.cnblogs.com/zjw2004112/p/11584422.html
+     * 解析参考：https://bbs.csdn.net/topics/392467265
+     *  建议提高精度和复杂模式开启
+     *    //精度
+     *    hints.put(DecodeHintType.TRY_HARDER, Boolean.TRUE);
+     *    //复杂模式
+     *    hints.put(DecodeHintType.PURE_BARCODE, Boolean.TRUE);
      * 实测可行
      * @throws IOException
      * @throws WriterException
