@@ -1,23 +1,19 @@
 package org.py.test.mybatis.test02;
 
-import com.alibaba.fastjson.JSON;
-import org.springframework.boot.SpringApplication;
+import org.springframework.boot.Banner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.stereotype.Component;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 /**
  * Hello world!
+ * @author pengyue.du
  */
 @EnableTransactionManagement
 @SpringBootApplication
 public class Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        new SpringApplicationBuilder(Application.class).bannerMode(Banner.Mode.CONSOLE).run(args);
     }
 
 }

@@ -15,6 +15,7 @@
   <modules>
     <module>mybatis-p6spy</module>
     <module>mybatis-plugin</module>
+    <module>mybatis</module>
   </modules>
 
   <name>springboot-mybatis</name>
