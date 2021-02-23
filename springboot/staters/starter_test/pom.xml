@@ -9,11 +9,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>tool_starter</artifactId>
+    <artifactId>starter_test</artifactId>
     <packaging>pom</packaging>
     <modules>
         <module>simpledb-spring-boot-starter</module>
         <module>simpledb-spring-boot-autoconfigure</module>
+        <module>simpledb-starter-test</module>
     </modules>
 
 

@@ -12,6 +12,13 @@
       <version>8.0.21</version>
     </dependency>
     // 数据库驱动需要单独提供，没有默认的
+    
+    <dependency>
+      <groupId>org.mybatis.spring.boot</groupId>
+      <artifactId>mybatis-spring-boot-autoconfigure</artifactId>
+    </dependency>
+    // spring自动注入的一些类
+        
 2. 参数配置：
     // 数据库连接用户
     spring.datasource.username=root

@@ -18,6 +18,7 @@
       <module>mybatisplus</module>
       <module>springboot-mybatis</module>
       <module>cassandra</module>
+      <module>staters</module>
   </modules>
 
   <name>springboot</name>
