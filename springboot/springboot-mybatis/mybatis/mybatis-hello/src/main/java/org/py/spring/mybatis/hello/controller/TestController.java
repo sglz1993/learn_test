@@ -30,9 +30,12 @@ public class TestController {
     private TestService testService;
     @Resource
     private HikariDataSource hikariDataSource;
+//    @Resource
+//    private org.py.db.starter.service.TestService simpleTestService;
 
     @GetMapping(value = {"/hello","/hello1"})
     public String hello(@RequestParam(value = "id", defaultValue="1") Integer id) {
+//        simpleTestService.hello();
         return JSON.toJSONString(testMapper.selectByPrimaryKey(id));
     }
 

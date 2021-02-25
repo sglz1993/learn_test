@@ -19,6 +19,7 @@
       <module>apollo</module>
       <module>scala</module>
       <module>friend_model</module>
+      <module>mybatisplus-generator</module>
   </modules>
 
   <name>learn_test</name>

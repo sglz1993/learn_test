@@ -46,11 +46,25 @@ public class Test extends Model<Test> {
         this.name = name == null ? null : name.trim();
     }
 
+//    public boolean gettBool() {
+//        return tBool;
+//    }
+//
+//    public void settBool(boolean tBool) {
+//        this.tBool = tBool;
+//    }
+
+    public boolean getToolBool() {
+        return tBool;
+    }
+
     public boolean gettBool() {
         return tBool;
     }
 
-    public void settBool(boolean tBool) {
+    public void setToolBool(boolean tBool) {
         this.tBool = tBool;
     }
+
+
 }

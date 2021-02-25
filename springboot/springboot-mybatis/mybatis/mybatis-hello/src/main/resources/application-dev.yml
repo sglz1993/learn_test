@@ -12,6 +12,13 @@ mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
   type-aliases-package: com.example.entity
 
+# https://blog.csdn.net/sayyy/article/details/80843805
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
 #showSql
 logging:
   level:
