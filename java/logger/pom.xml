@@ -7,10 +7,8 @@
     <modules>
         <module>logback-hello-01</module>
         <module>logback-plugin-01</module>
-        <module>logger-java-springprofile-02</module>
         <module>logger-springboot-springprofile-03</module>
         <module>logger-springboot-apollo-04</module>
-        <module>logger-apollo-test-05</module>
         <module>logback-filter-test-01</module>
     </modules>
     <parent>

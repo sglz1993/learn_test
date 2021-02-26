@@ -35,8 +35,8 @@
         <neverBlock>true</neverBlock>
     </appender>
 
-    <root level="${root_log_level:-debug}">
+    <root level="info">
         <appender-ref ref="stdout"/>
-        <appender-ref ref="async_file"/>
+<!--        <appender-ref ref="async_file"/>-->
     </root>
 </configuration>
