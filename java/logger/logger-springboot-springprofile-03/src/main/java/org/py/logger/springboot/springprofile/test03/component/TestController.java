@@ -15,7 +15,10 @@ public class TestController {
 
     @RequestMapping("hello")
     public String hello() {
+        log.debug("hello lalal");
         log.info("hello lalal");
+        log.warn("hello lalal");
+        log.error("hello lalal");
         return "hello world";
     }
     

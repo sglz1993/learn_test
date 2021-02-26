@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration scan="true" scanPeriod="30 seconds">
-    <contextName>logger-springboot-springprofile-03</contextName>
+<configuration scan="true" scanPeriod="5 seconds">
 
-    <springProperty name="root_log_level" source="root_log_level"/>
+    <springProperty name="log_level" scope="context" source="root_log_level"/>
 
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -35,7 +34,7 @@
         <neverBlock>true</neverBlock>
     </appender>
 
-    <root level="info">
+    <root level="${log_level:-error}">
         <appender-ref ref="stdout"/>
 <!--        <appender-ref ref="async_file"/>-->
     </root>
