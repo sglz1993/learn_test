@@ -21,4 +21,4 @@ mybatis-plus:
 logging:
   level:
     org:
-      py: debug
+      py: trace
