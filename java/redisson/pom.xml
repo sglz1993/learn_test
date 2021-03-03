@@ -23,6 +23,15 @@
             <version>3.15.0</version>
         </dependency>
 
+        <!--https://www.lingjie.tech/article/2021-01-31/29-->
+        <!-- https://mvnrepository.com/artifact/io.netty/netty-all -->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>4.1.59.Final</version>
+        </dependency>
+
+
     </dependencies>
 
 </project>
