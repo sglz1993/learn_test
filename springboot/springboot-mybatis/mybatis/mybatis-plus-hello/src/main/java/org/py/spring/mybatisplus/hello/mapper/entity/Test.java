@@ -1,9 +1,6 @@
 package org.py.spring.mybatisplus.hello.mapper.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 
 /**
@@ -20,12 +17,14 @@ public class Test extends Model<Test> {
 
     /**
      */
+    @TableField
     private String name;
 
     /**
      *
      */
     @TableLogic(value = "false", delval = "true")
+    @Version
     private boolean tBool;
 
     public Test(String name) {
