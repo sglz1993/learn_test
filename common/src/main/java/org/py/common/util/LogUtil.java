@@ -6,6 +6,7 @@ import ch.qos.logback.classic.turbo.TurboFilter;
 import ch.qos.logback.core.spi.FilterReply;
 import org.py.common.Constant;
 import org.py.common.reflect.Jexl3Util;
+import org.py.common.thread.ExceptionUtil;
 import org.py.common.thread.StackUtil;
 import org.py.common.weixin.WarningUtil;
 import org.slf4j.LoggerFactory;
@@ -32,10 +33,19 @@ public class LogUtil {
                     String requestId = MDC.get(Constant.REQUEST_ID);
                     String message = String.format(String.format("requestId:%s  --  loggerlevel:%s   \n" +
                             "loggerName:%s\n" +
-                            "msg:%s\n", requestId, level.levelStr, logger.getName(), MessageFormatter.arrayFormat(format, params, t).getMessage()));
+                            "msg:%s\n" +
+                            "%s", requestId, level.levelStr, logger.getName(), MessageFormatter.arrayFormat(format, params, t).getMessage()),
+                            getExecptionDisplay(t));
                     warningUtil.sendWarning(message);
                 }
                 return FilterReply.NEUTRAL;
+            }
+
+            private String getExecptionDisplay(Throwable t) {
+                if(t == null) {
+                    return "";
+                }
+                return String.format("error stack : %s", ExceptionUtil.getThrowableStackInfo(t));
             }
         });
     }
