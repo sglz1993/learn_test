@@ -55,19 +55,24 @@ public class ClassTest {
         System.out.println(format.format(date));
     }
 
+    @SuppressWarnings("AliAccessStaticViaInstance")
     @Test
     public void test6() {
-        System.out.println("hello");
+        System.out.println(Person.name);
+        System.out.println(Man.name);
+        System.out.println(new Man(){}.name);
     }
 
 
+
+
     static class Person {
-        String name = "Person";
+        static String name = "Person";
     }
 
     static class Man extends Person{
         static Man man = new Man();
-        private String name = "Man";
+        static String name = "Man";
         static {
             System.out.println(man.toString());
         }

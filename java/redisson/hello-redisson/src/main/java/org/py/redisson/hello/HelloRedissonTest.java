@@ -3,15 +3,24 @@ package org.py.redisson.hello;
 import com.alibaba.fastjson.JSON;
 import org.junit.Test;
 import org.redisson.Redisson;
-import org.redisson.api.RLock;
-import org.redisson.api.RMap;
-import org.redisson.api.RedissonClient;
+import org.redisson.api.*;
 import org.redisson.config.Config;
 import org.redisson.config.SentinelServersConfig;
 import org.redisson.config.SingleServerConfig;
 
 public class HelloRedissonTest {
 
+
+    @Test
+    public void batch() {
+        Config config = new Config();
+        SentinelServersConfig serversConfig = config.useSentinelServers();
+        serversConfig.setMasterName("mymaster").addSentinelAddress("").addSentinelAddress("");
+        RedissonClient client = Redisson.create(config);
+        RBatch batch = client.createBatch(BatchOptions.defaults());
+        config.setNettyThreads(1);
+
+    }
 
 
     @Test
@@ -36,6 +45,7 @@ public class HelloRedissonTest {
     public void useSingleServer() {
         Config config = new Config();
         SingleServerConfig singleServerConfig = config.useSingleServer();
+        singleServerConfig.setClientName("testjdk18");
         singleServerConfig.setAddress("redis://127.0.0.1:6379");
         RedissonClient client = Redisson.create(config);
         RMap<Object, Object> map = client.getMap("key");
