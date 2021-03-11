@@ -10,6 +10,7 @@ import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
@@ -88,7 +89,7 @@ public class HttpClientUtilV1 {
             }
             if (MapUtils.isNotEmpty(bodyParamMap)) {
                 if (json) {
-                    httpPost.setEntity(new StringEntity(getGson().toJson(bodyParamMap)));
+                    httpPost.setEntity(new StringEntity(getGson().toJson(bodyParamMap), ContentType.APPLICATION_JSON));
                 } else {
                     MultipartEntityBuilder builder = MultipartEntityBuilder.create().setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
                     for (Map.Entry<String, Object> entry : bodyParamMap.entrySet()) {

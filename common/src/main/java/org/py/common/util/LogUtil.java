@@ -34,14 +34,17 @@ public class LogUtil {
                     String message = String.format(String.format("requestId:%s  --  loggerlevel:%s   \n" +
                             "loggerName:%s\n" +
                             "msg:%s\n" +
-                            "%s", requestId, level.levelStr, logger.getName(), MessageFormatter.arrayFormat(format, params, t).getMessage()),
-                            getExecptionDisplay(t));
+                            "%s", requestId, level.levelStr, logger.getName(), MessageFormatter.arrayFormat(format, params, t).getMessage(),
+                            getExecptionDisplay(params, t)));
                     warningUtil.sendWarning(message);
                 }
                 return FilterReply.NEUTRAL;
             }
 
-            private String getExecptionDisplay(Throwable t) {
+            private String getExecptionDisplay(Object[] params, Throwable t) {
+                if(t == null && params != null && params.length > 0 && params[params.length - 1] instanceof Throwable) {
+                    t = (Throwable) params[params.length - 1];
+                }
                 if(t == null) {
                     return "";
                 }

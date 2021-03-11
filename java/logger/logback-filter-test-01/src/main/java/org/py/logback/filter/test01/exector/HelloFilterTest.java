@@ -7,6 +7,7 @@ import ch.qos.logback.classic.turbo.TurboFilter;
 import ch.qos.logback.core.spi.FilterReply;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
+import org.py.common.util.LogUtil;
 import org.py.logback.filter.test01.filter.HelloLogbackFilter;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
@@ -56,8 +57,9 @@ public class HelloFilterTest {
      */
     @Test
     public void testError() {
-        LoggerContext loggerFactory = (LoggerContext) LoggerFactory.getILoggerFactory();
-        loggerFactory.addTurboFilter(new HelloLogbackFilter());
+//        LoggerContext loggerFactory = (LoggerContext) LoggerFactory.getILoggerFactory();
+//        loggerFactory.addTurboFilter(new HelloLogbackFilter());
+        LogUtil.addLoggerFilter();
         log.info("");
         log.info("lalal");
         log.info("lalal:{}", "param");
