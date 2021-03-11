@@ -5,6 +5,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.py.common.http.HttpClientUtilV1;
+import org.py.common.internals.Ordered;
 import org.py.common.util.DateUtil;
 import org.py.common.util.Util;
 
@@ -20,8 +21,9 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+@Ordered
 @Slf4j
-public class WeixinWarningUtil {
+public class WeixinWarningUtil implements WarningUtil{
 
 
     private static ThreadPoolExecutor executorService;
@@ -34,7 +36,6 @@ public class WeixinWarningUtil {
     }
 
     private String ENV = "";
-    private String DOMAIN = "";
     private String DEFAULT_WEBHOOKADDR = "";
     private String DEFAULT_TEMPLATE;
     private boolean SYNC = true;
@@ -48,9 +49,13 @@ public class WeixinWarningUtil {
                 "<font color=\"red\">{MESSAGE}</font>";
     }
 
+    public WeixinWarningUtil() {
+        ENV = "local";
+        DEFAULT_WEBHOOKADDR = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=1c5f4d91-be16-4988-af76-c4d44a1af8dc";
+    }
+
     public WeixinWarningUtil(String env, String domain, String defaultWebHookAddr, boolean sync) {
         ENV = env;
-        DOMAIN = domain;
         DEFAULT_WEBHOOKADDR = defaultWebHookAddr;
         SYNC = sync;
     }
@@ -59,6 +64,7 @@ public class WeixinWarningUtil {
         sendWarning(webHookAddr, message, null);
     }
 
+    @Override
     public void sendWarning(String message) {
         if (StringUtils.isBlank(DEFAULT_WEBHOOKADDR)) {
             throw new InvalidParameterException("webHookAddr is empty");
@@ -73,6 +79,7 @@ public class WeixinWarningUtil {
         sendWarning(DEFAULT_WEBHOOKADDR, message, mobiles);
     }
 
+    @Override
     public void sendWarningMD(String message) {
         if (StringUtils.isBlank(DEFAULT_WEBHOOKADDR)) {
             throw new InvalidParameterException("webHookAddr is empty");
@@ -112,8 +119,8 @@ public class WeixinWarningUtil {
         ZonedDateTime now = ZonedDateTime.now();
         message = String.format("时间: %s \n 时间戳：%s \n 来源：%s \n 异常信息：%s ",
                 DateUtil.getStrDate(now), now.toInstant().toEpochMilli(), getHostName(), message);
-        if (StringUtils.isNotBlank(ENV) && StringUtils.isNotBlank(DOMAIN)) {
-            message = String.format("%s - %s \n %s", DOMAIN, ENV, message);
+        if (StringUtils.isNotBlank(ENV)) {
+            message = String.format("%s \n %s", ENV, message);
         }
         Map<String, Object> param = new HashMap<>();
         param.put("msgtype", "text");
@@ -156,7 +163,7 @@ public class WeixinWarningUtil {
 
     private Map<String, String> getBasePlaceHolder() {
         ZonedDateTime now = ZonedDateTime.now();
-        return Util.asMap("DOMAIN", DOMAIN, "ENV", ENV, "FORMAT_DATE",
+        return Util.asMap( "ENV", ENV, "FORMAT_DATE",
                 DateUtil.getStrDate(now), "TIMESTAMP", String.valueOf(now.toInstant().toEpochMilli()), "FROM", getHostName());
     }
 

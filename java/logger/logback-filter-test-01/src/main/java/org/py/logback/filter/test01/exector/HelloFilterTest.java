@@ -34,6 +34,43 @@ public class HelloFilterTest {
         log.error("lalal error:{}, {}", "error", 4);
     }
 
+    /**
+     * logger.name:org.py.logback.filter.test01.exector.HelloFilterTest, level:INFO-20000 , format:, param:, exception:
+     * [2021-03-11 16:38:25.942+0800] [INFO ] [] [org.py.logback.filter.test01.exector.HelloFilterTest] [testError]:41
+     * logger.name:org.py.logback.filter.test01.exector.HelloFilterTest, level:INFO-20000 , format:lalal, param:, exception:
+     * [2021-03-11 16:38:25.947+0800] [INFO ] [] [org.py.logback.filter.test01.exector.HelloFilterTest] [testError]:42 lalal
+     * logger.name:org.py.logback.filter.test01.exector.HelloFilterTest, level:INFO-20000 , format:lalal:{}, param:[param], exception:
+     * [2021-03-11 16:38:25.956+0800] [INFO ] [] [org.py.logback.filter.test01.exector.HelloFilterTest] [testError]:43 lalal:param
+     * logger.name:org.py.logback.filter.test01.exector.HelloFilterTest, level:ERROR-40000 , format:, param:, exception:java.lang.ArithmeticException: / by zero
+     * 	at org.py.logback.filter.test01.exector.HelloFilterTest.testError(HelloFilterTest.java:45)
+     * 	at com.intellij.rt.junit.JUnitStarter.main(JUnitStarter.java:53)
+     *
+     * [2021-03-11 16:38:25.962+0800] [ERROR] [] [org.py.logback.filter.test01.exector.HelloFilterTest] [testError]:47
+     * java.lang.ArithmeticException: / by zero
+     * 	at org.py.logback.filter.test01.exector.HelloFilterTest.testError(HelloFilterTest.java:45)
+     * 	at com.intellij.rt.junit.JUnitStarter.main(JUnitStarter.java:53)
+     *
+     * [2021-03-11 16:38:25.962+0800] [ERROR] [] [org.py.logback.filter.test01.exector.HelloFilterTest] [testError]:48 lalal
+     * java.lang.ArithmeticException: / by zero
+     * 	at org.py.logback.filter.test01.exector.HelloFilterTest.testError(HelloFilterTest.java:45)
+     */
+    @Test
+    public void testError() {
+        LoggerContext loggerFactory = (LoggerContext) LoggerFactory.getILoggerFactory();
+        loggerFactory.addTurboFilter(new HelloLogbackFilter());
+        log.info("");
+        log.info("lalal");
+        log.info("lalal:{}", "param");
+        log.info("lalal:{}", "param", new RuntimeException("lalal"));
+        try {
+            int i = 1/0;
+        } catch (Exception e) {
+            log.error("", e);
+            log.error("lalal", e);
+            log.error("lalal:{}", "errormsg",  e);
+        }
+    }
+
     @Test
     public void testLogbackFilter() {
         LoggerContext loggerFactory = (LoggerContext) LoggerFactory.getILoggerFactory();

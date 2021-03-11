@@ -1,8 +1,16 @@
 package org.py.common.util;
 
+import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 
 public class StringUtil {
+
+    public static  <T> String toString(T[] arrays) {
+        if(arrays == null || arrays.length == 0) {
+            return "";
+        }
+        return Lists.newArrayList(arrays).toString();
+    }
 
     public static String hump2Line(String data) {
         if(StringUtils.isBlank(data)) {

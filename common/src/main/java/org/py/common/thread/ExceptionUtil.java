@@ -8,6 +8,9 @@ import java.lang.reflect.UndeclaredThrowableException;
 public class ExceptionUtil {
 
     public static String getThrowableStackInfo(Throwable throwable) {
+        if(throwable == null) {
+            return "";
+        }
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
         throwable.printStackTrace(pw);
